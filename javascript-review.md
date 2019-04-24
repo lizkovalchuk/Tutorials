@@ -1,6 +1,30 @@
 # JavaScript Review
-## Free Code Camp Intro to JavaScript Tutorial 4/22/2019
+## Free Code Camp Intro to JavaScript Tutorial Notes
 
+1. [ Variables and Data Types ](#vars-data-types)
+2. [ Escape Characters ](#esc-chars)
+3. [ Length ](#length) 
+4. [ Bracket Notation ](#bracket-notation) 
+5. [ Arrays ](#arrays) 
+6. [ Manipulating Arrays ](#manipulating-arrays) 
+7. [ Global Scope and Functions ](#scope-functions) 
+8. [ Switch Statement ](#switch) 
+9. [ Returning Boolean Values from Functions ](#booleans-functions)
+10. [ Objects ](#objects) 
+11. [ Using Objects for Lookups ](#lookups-objects) 
+12. [ Testing Objects for Properties ](#testing-obj-props) 
+13. [ Manipulating Complex Objects ](#manipulating-complex-objects)
+14. [ Accessing Nested Objects ](#nested-objects) 
+15. [ Accessing Nested Arrays ](#nested-arrays) 
+16. [ Loops ](#loops) 
+17. [ Do...While Loops ](#do-while-loops) 
+18. [ Math Function ](#math-function) 
+19. [ ParseInt ](#parseInt) 
+20. [ Conditional Ternary Operator ](#ternary)
+
+
+<a name="vars-data-types"></a>
+### ___Variables and Data Types___ 
 JavaScript provides seven different data types which are undefined, null, boolean, string, symbol, number, and object. Variable names can be made up of numbers, letters, and $ or _, but may not contain spaces or start with a number.
 
 Decimal numbers are sometimes referred to as floating point numbers or floats.
@@ -14,13 +38,14 @@ for(i=0; i < 16; i++){
         console.log("fizz")
     } if(i % 5 == 0){
         console.log("buzz")
-    } 
-    if (i % 3 !== 0 && i % 5 !== 0){
+    } if (i % 3 !== 0 && i % 5 !== 0){
         console.log(i)
     }
 }
 ```
 
+<a name="esc-chars"></a>
+### ___Escape Characters___
 The following is a list of required escaping:
 
 | Code | Output |
@@ -34,11 +59,13 @@ The following is a list of required escaping:
 | \\b           | backspace  |
 | \\f           | form feed  |
 
-####Find the Length
+<a name="length"></a>
+### ___Find the Length___
 
-You can find the length of a String value by writing .length after the string variable or string literal.
-	
-#### Bracket Notation
+You can find the length of a String value by writing ```.length``` after the string variable or string literal.
+
+<a name="bracket-notation"></a>	
+### ___Bracket Notation___
 
 Bracket notation is a way to get a character at a specific index within a string. For example, the character at index 0 in the word "Charles" is "C". So if ```var firstName = "Charles"```, you can get the value of the first letter of the string by using ```firstName[0]```.
 
@@ -48,7 +75,8 @@ For example, if ```var firstName = "Charles"```, you can get the value of the la
 	
 You can use the same principle we just used to retrieve the last character in a string to retrieve the Nth-to-last character. For example, you can get the value of the third-to-last letter of the ```var firstName = "Charles"``` string by using ```firstName[firstName.length - 3]```.
 
-#### Arrays
+<a name="arrays"></a>	
+### ___Arrays___
 
 You can nest arrays within other arrays, like this: ```[["Bulls", 23], ["White Sox", 45]]```. This is also called a Multi-dimensional Array (array of arrays).
 
@@ -71,7 +99,8 @@ arr[3][0]; // equals [10,11,12]
 arr[3][0][1]; // equals 11
 ```
 
-#### Manipulating Arrays
+<a name="manipulating-arrays"></a>	
+### ___Manipulating Arrays___
 
 ```.push()``` takes one or more parameters and "pushes" them onto the end of the array.
 
@@ -88,9 +117,10 @@ console.log(threeArr); // Returns [1, 4]
 
 ```.unshift()``` works exactly like ```.push()```, but instead of adding the element at the end of the array, ```unshift()``` adds the element at the beginning of the array.
 
-#### Global Scope and Functions
+<a name="scope-functions"></a>
+### ___Global Scope and Functions___
 
-##### Scope
+#### Scope
 
 Variables which are defined outside of a function block have Global scope. This means, they can be seen everywhere in your JavaScript code.
 
@@ -98,7 +128,7 @@ Variables which are used without the var keyword are automatically created in th
 
 Variables which are declared within a function, as well as the function parameters have local scope. It is possible to have both local and global variables with the same name. When you do this, the local variable takes precedence over the global variable.
 
-##### Undefined Value returned from a Function
+#### Undefined Value returned from a Function
 
 A function can include the return statement but it does not have to. In the case that the function doesn't have a return statement, when you call it, the function processes the inner code but the returned value is undefined.
 
@@ -154,7 +184,8 @@ typeof 3 // returns 'number'
 typeof '3' // returns 'string'
 ```
 
-#### Switch Statement
+<a data="switch"></a>
+### ___Switch Statement___
 
 In a ```switch``` statement you may not be able to specify all possible values as ```case``` statements. Instead, you can add the ```default``` statement which will be executed if no matching ```case``` statements are found. 
 
@@ -171,7 +202,8 @@ case 4:
 }
 ```
 
-#### Returning Boolean Values from Functions
+<a data="booleans-functions"></a>
+### ___Returning Boolean Values from Functions___
 
 Sometimes people use an if/else statement to do a comparison, like this:
 ```javascript
@@ -281,7 +313,8 @@ function cc(card) {
 // Note: Only the last will display
 cc(2); cc(3); cc(7); cc('K'); cc('A');
 ```
-#### Objects
+<a data="objects"></a>
+### ___Objects___
 
 Objects are similar to ```arrays```, except that instead of using indexes to access and modify their data, you access the data in objects through what are called ```properties```. Properties don't always need to be strings, you can also use numbers as properties. You can even omit the quotes for single-word string properties, as follows:
 ```javascript
@@ -407,7 +440,8 @@ We can also delete properties from objects like this:
 delete ourDog.bark;
 ```
 
-####  Using Objects for Lookups
+<a data="lookups-objects"></a>
+###  ___Using Objects for Lookups___
 
 Objects can be thought of as a key/value storage, like a dictionary. If you have tabular data, you can use an object to "lookup" values rather than a ```switch``` statement or an ```if/else``` chain. This is most useful when you know that your input data is limited to a certain range.
 
@@ -493,7 +527,8 @@ function phoneticLookup(val) {
 phoneticLookup("charlie");
 ```
 
-#### Testing Objects for Properties
+<a data="testing-obj-props"></a>
+### ___Testing Objects for Properties___
 
 Sometimes it is useful to check if the property of a given object exists or not. We can use the ```.hasOwnProperty(propname)``` method of objects to determine if that object has the given property name. ```.hasOwnProperty()``` returns true or false if the property is found or not. Example:
 ```javascript
@@ -505,7 +540,8 @@ myObj.hasOwnProperty("top"); // true
 myObj.hasOwnProperty("middle"); // false
 ```
 
-#### Manipulating Complex Objects
+<a data="manipulating-complex-objects"></a>
+### ___Manipulating Complex Objects___
 
 A JavaScript object is one way to handle flexible data. They allow for arbitrary combinations of strings, numbers, booleans, arrays, functions, and objects. Here's an example of a complex data structure:
 
@@ -585,7 +621,8 @@ var myMusic = [
   }
 ];
 ```
-#### Accessing Nested Objects
+<a data="nested-objects"></a>
+### ___Accessing Nested Objects___
 
 The sub-properties of objects can be accessed by chaining together the dot or bracket notation. Here is a nested object:
 ```javascript
@@ -604,8 +641,8 @@ var ourStorage = {
 ourStorage.cabinet["top drawer"].folder2; // "secrets"
 ourStorage.desk.drawer; // "stapler"
 ```
-
-#### Accessing Nested Arrays
+<a data="nested-arrays"></a>
+### ___Accessing Nested Arrays___
 
 As we have seen in earlier examples, objects can contain both nested objects and nested arrays. Similar to accessing nested objects, Array bracket notation can be chained to access nested arrays. Here is an example of how to access a nested array:
 
@@ -705,10 +742,10 @@ function updateRecords(id, prop, value) {
   return collection;
 }
 ```
+<a data="loops"></a>
+### ___Loops___
 
-#### Loops
-
-For loops don't have to iterate one at a time. By changing our ```final-expression```, we can count by even numbers.
+The most popular loops are the ```while``` and ```for``` loops. For loops don't have to iterate one at a time. By changing our ```final-expression```, we can count by even numbers.
 
 ```javascript
 var ourArray = [];
@@ -719,4 +756,232 @@ for (var i = 0; i < 10; i += 2) {
 
 ```ourArray``` will now contain ```[0,2,4,6,8]```.
 
+A common task in JavaScript is to iterate through the contents of an array.
+
+```javascript
+var arr = [10,9,8,7,6];
+for (var i = 0; i < arr.length; i++) {
+   console.log(arr[i]);
+}
+```
+You can use nested for loops if you have multi-dimensional arrays.
+```javascript
+var arr = [
+  [1,2], [3,4], [5,6]
+];
+for (var i=0; i < arr.length; i++) {
+  for (var j=0; j < arr[i].length; j++) {
+    console.log(arr[i][j]);
+  }
+}
+```
+Excersise: Modify function ```multiplyAll``` so that it multiplies the ```product``` variable by each number in the sub-arrays of ```arr```.
+
+Before:
+```javascript
+var arr = [
+  [1,2], [3,4], [5,6]
+];
+for (var i=0; i < arr.length; i++) {
+  for (var j=0; j < arr[i].length; j++) {
+    console.log(arr[i][j]);
+  }
+}
+```
+After:
+```javascript
+function multiplyAll(arr) {
+  var product = 1;
+  // Only change code below this line
+  for (var i=0; i < arr.length; i++){
+    for (var j=0; j < arr[i].length; j++){
+      product *= arr[i][j];
+    }
+  }
+  // Only change code above this line
+  return product;
+}
+
+// Modify values below to test your code
+multiplyAll([[1,2],[3,4],[5,6,7]]);
+```
+
+<a data="do-while-loops"></a>
+### ___Do...While Loops___
+
+A "```do...while```" loop will first "```do```" one pass of the code inside the loop no matter what, and then it runs "```while```" a specified condition is true and stops once that condition is no longer true.
+
+```javascript
+var ourArray = [];
+var i = 0;
+do {
+  ourArray.push(i);
+  i++;
+} while (i < 5);
+```
+What makes the ```do...while``` different from other loops is how it behaves when the condition fails on the first check. A ````do...while``` loop ensures that the code inside the loop will run at least once.
+
+#### Profile Lookup Exercise
+
+Update the ```lookupProfile``` function so it checks that ```name``` is an actual contact's firstName and the given property (```prop```) is a property of that contact. If both are true, then return the "value" of that property. If ```name``` does not correspond to any contacts then return ```"No such contact"```. If ```prop``` does not correspond to any valid properties of a contact found to match name then return ```"No such property"```.
+
+Before:
+```javascript
+//Setup
+var contacts = [
+    {
+        "firstName": "Akira",
+        "lastName": "Laine",
+        "number": "0543236543",
+        "likes": ["Pizza", "Coding", "Brownie Points"]
+    },
+    {
+        "firstName": "Harry",
+        "lastName": "Potter",
+        "number": "0994372684",
+        "likes": ["Hogwarts", "Magic", "Hagrid"]
+    },
+    {
+        "firstName": "Sherlock",
+        "lastName": "Holmes",
+        "number": "0487345643",
+        "likes": ["Intriguing Cases", "Violin"]
+    },
+    {
+        "firstName": "Kristian",
+        "lastName": "Vos",
+        "number": "unknown",
+        "likes": ["JavaScript", "Gaming", "Foxes"]
+    }
+];
+
+
+function lookUpProfile(name, prop){
+// Only change code below this line
+
+// Only change code above this line
+}
+
+// Change these values to test your function
+lookUpProfile("Akira", "likes");
+```
+
+After:
+```javascript
+function lookUpProfile(name, prop){
+// Only change code below this line
+  var i;
+  for (var i = 0; i < contacts.length; i++){
+      if (contacts[i].firstName === name) {
+          if (contacts[i].hasOwnProperty(prop)) {
+              return contacts[i][prop];
+          } else {
+              return "No such property";
+          }
+      }
+  }
+return "No such contact";
+```
+<a data="math-function"></a>
+### ___Math Function___
+
+JavaScript has a ```Math.random()``` function that generates a random decimal number between 0 (inclusive) and not quite up to 1 (exclusive). Thus ```Math.random()``` can return a 0 but never quite return a 1.
+
+Exercise: Change randomFraction to return a random number instead of returning 0.
+
+Before:
+```javascript
+function randomFraction() {
+
+  // Only change code below this line.
+
+  return 0;
+
+  // Only change code above this line.
+}
+```
+After:
+```javascript
+function randomFraction() {
+
+  // Only change code below this line.
+
+  return Math.random();
+
+  // Only change code above this line.
+}
+```
+
+```Math.floor()``` to round the number down to its nearest whole number. We can generate a random number that falls within a range of two specific numbers. To do this, we'll define a minimum number ```min``` and a maximum number ```max```. This is done with the following code:
+```javascript
+Math.floor(Math.random() * (max - min + 1)) + min
+```
+
+<a data="ParseInt"></a>
+### ___ParseInt___
+
+The ```parseInt()``` function parses a string and returns an integer. Here's an example:
+```javascript
+var a = parseInt("007");
+```
+
+The above function converts the string "007" to an integer 7. If the first character in the string can't be converted into a number, then it returns ```NaN```.
+
+The ```parseInt``` function can take a second argument for the radix, which specifies the base of the number in the string. The radix can be an integer between 2 and 36. And here's an example:
+```javascript
+var a = parseInt("11", 2);
+```
+
+The radix variable says that "11" is in the binary system, or base 2. This example converts the string "11" to an integer 3.
+
+<a data="ternary"></a>
+### ___Conditional Ternary Operator___
+
+The syntax is:
+```
+condition ? statement-if-true : statement-if-false;
+```
+The following function uses an if-else statement to check a condition:
+```javascript
+function findGreater(a, b) {
+  if(a > b) {
+    return "a is greater";
+  }
+  else {
+    return "b is greater";
+  }
+}
+```
+
+This can be re-written using the conditional operator:
+```javascript
+function findGreater(a, b) {
+  return a > b ? "a is greater" : "b is greater";
+}
+```
+
+You can also chain ternary operators together to check for multiple conditions. 
+
+```javascript
+The following function uses if, else if, and else statements to check multiple conditions:
+
+function findGreaterOrEqual(a, b) {
+  if(a === b) {
+    return "a and b are equal";
+  }
+  else if(a > b) {
+    return "a is greater";
+  }
+  else {
+    return "b is greater";
+  }
+}
+```
+The above function can be re-written using multiple conditional operators:
+
+```javascript
+function findGreaterOrEqual(a, b) {
+  return (a === b) ? "a and b are equal" : (a > b) ? "a is greater" : "b is greater";
+}
+```
 
