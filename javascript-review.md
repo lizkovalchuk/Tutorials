@@ -23,6 +23,7 @@
 20. [ Conditional Ternary Operator ](#ternary)
 
 
+
 <a name="vars-data-types"></a>
 ### ___Variables and Data Types___ 
 JavaScript provides seven different data types which are undefined, null, boolean, string, symbol, number, and object. Variable names can be made up of numbers, letters, and $ or _, but may not contain spaces or start with a number.
