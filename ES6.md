@@ -14,7 +14,17 @@
 11. [ Destructing Assignment From Nested Objects ](#destructuring-from-nested-objects)
 12. [ Destructing Assignment From Arrays ](#destructuring-from-arrays)
 13. [ Reassigning Array Elements with Destructuring and Rest Operator ](#reassign-array-els-w-destructuring-and-RO)
-
+14. [ Pass Object as Parameter(s) using Destucturing ](#pass-object-as-parameter) 
+15. [ Create Strings Using Template Literals ](#strings-template-literals)
+16. [ Object Literal Declarations Using Simple Fields ](#object-declarations-simple-fields)
+17. [ Concise Declarative Functions ](#concise-functions)
+18. [ Classes and Constructors in ES6 ](#classes-constructor)
+19. [ Object Access Control ](#object-access-control)
+20. [ Import and Require ](#import-require)
+21. [ Export to Reuse a Code Block ](#export-reuse-code-block)
+22. [ Use * to Import Everything from a File ](#asterisks)
+23. [ Export Fallback ](#export-fallback) 
+24. [ Import Fallback ](#import-fallback) 
 
 <a data="intro"></a>
 ### ___Intro___
@@ -541,3 +551,530 @@ const [a, b, ...arr] = [1, 2, 3, 4, 5, 7];
 console.log(a, b); // 1, 2
 console.log(arr); // [3, 4, 5, 7]
 ```
+Variables ```a``` and ```b``` take the first and second values from the array. After that, because of the rest operator's presence, ```arr``` gets rest of the values in the form of an array.
+
+__Exercise:__
+
+Use destructuring assignment with the rest operator to perform an effective ```Array.prototype.slice()``` so that ```arr``` is a sub-array of the original array source with the first two elements omitted.
+
+Before:
+
+```javascript
+const source = [1,2,3,4,5,6,7,8,9,10];
+function removeFirstTwo(list) {
+  "use strict";
+  // change code below this line
+  arr = list; // change this
+  // change code above this line
+  return arr;
+}
+const arr = removeFirstTwo(source);
+console.log(arr); // should be [3,4,5,6,7,8,9,10]
+console.log(source); // should be [1,2,3,4,5,6,7,8,9,10];
+```
+
+After:
+
+```javascript
+const source = [1,2,3,4,5,6,7,8,9,10];
+function removeFirstTwo(list) {
+  "use strict";
+  // change code below this line
+  const [a,b, ...arr]  = list; // change this
+  // change code above this line
+  return arr;
+}
+const arr = removeFirstTwo(source);
+console.log(arr); // should be [3,4,5,6,7,8,9,10]
+console.log(source); // should be [1,2,3,4,5,6,7,8,9,10];
+```
+
+<a data="pass-object-as-parameter"></a>
+### ___Pass Object as Parameter(s) Using Destructuring___
+
+In some cases, you can destructure the object in a function argument itself. Consider the code below:
+
+```javascript
+const profileUpdate = (profileData) => {
+  const { name, age, nationality, location } = profileData;
+  // do something with these variables
+}
+```
+
+This effectively destructures the object sent into the function. This can also be done in-place:
+
+```javascript
+const profileUpdate = ({ name, age, nationality, location }) => {
+  /* do something with these fields */
+}
+```
+
+This removes some extra lines and makes our code look neat.
+
+This has the added benefit of not having to manipulate an entire object in a function; only the fields that are needed are copied inside the function.
+
+__Exercise__
+
+Use destructuring assignment within the argument to the function ```half``` to send only ```max``` and ```min``` inside the function.
+
+Before:
+
+```javascript
+const stats = {
+  max: 56.78,
+  standard_deviation: 4.34,
+  median: 34.54,
+  mode: 23.87,
+  min: -0.75,
+  average: 35.85
+};
+const half = (function() {
+  "use strict"; // do not change this line
+
+  // change code below this line
+  return function half(stats) {
+    // use function argument destructuring
+    return (stats.max + stats.min) / 2.0;
+  };
+  // change code above this line
+
+})();
+console.log(stats); // should be object
+console.log(half(stats)); // should be 28.015
+```
+
+After:
+
+```javascript
+const stats = {
+  max: 56.78,
+  standard_deviation: 4.34,
+  median: 34.54,
+  mode: 23.87,
+  min: -0.75,
+  average: 35.85
+};
+const half = (function() {
+  "use strict"; // do not change this line
+
+  // change code below this line
+
+  return function half({ max, min }) {
+  /* do something with these fields */
+    return (max + min) / 2.0;
+  }
+
+  // change code above this line
+
+})();
+console.log(stats); // should be object
+console.log(half(stats)); // should be 28.015
+```
+
+<a data="strings-template-literals"></a>
+### ___Create Strings using Template Literals___
+
+Template literals allow you to create multi-line strings and to use string interpolation features to create strings.
+
+```javascript
+const person = {
+  name: "Zodiac Hasbro",
+  age: 56
+};
+
+// Template literal with multi-line and string interpolation
+const greeting = `Hello, my name is ${person.name}!
+I am ${person.age} years old.`;
+
+console.log(greeting); // prints
+// Hello, my name is Zodiac Hasbro!
+// I am 56 years old.
+```
+
+Back-ticks are used to create multi line strings. The ```${variable}``` syntax used above is a placeholder. Basically, you won't have to use concatenation with the ```+``` operator anymore. To add variables to strings, you just drop the variable in a template string and wrap it with ```${``` and ```}```. Similarly, you can include other expressions in your string literal, for example ```${a + b}```.
+
+__Exercise__
+
+Use template literal syntax with backticks to display each entry of the ```result``` object's ```failure``` array. Each entry should be wrapped inside an ```li``` element with the class attribute ```text-warning```, and listed within the ```resultDisplayArray```.
+
+Before:
+
+```javascript
+const result = {
+  success: ["max-length", "no-amd", "prefer-arrow-functions"],
+  failure: ["no-var", "var-on-top", "linebreak"],
+  skipped: ["id-blacklist", "no-dup-keys"]
+};
+function makeList(arr) {
+  "use strict";
+
+  // change code below this line
+  const resultDisplayArray = null;
+  // change code above this line
+
+  return resultDisplayArray;
+}
+/**
+ * makeList(result.failure) should return:
+ * [ `<li class="text-warning">no-var</li>`,
+ *   `<li class="text-warning">var-on-top</li>`, 
+ *   `<li class="text-warning">linebreak</li>` ]
+ **/
+const resultDisplayArray = makeList(result.failure);
+```
+
+<a data="object-declarations-simple-fields"></a>
+### ___Object Literal Declarations Using Simple Fields___
+
+Consider the following code:
+
+```javascript
+const getMousePosition = (x, y) => ({
+  x: x,
+  y: y
+});
+```
+
+```getMousePosition``` is a simple function that returns an object containing two fields.
+
+ES6 provides the syntactic sugar to eliminate the redundancy of having to write ```x: x```. You can simply write ```x``` once, and it will be converted to ```x: x``` (or something equivalent) under the hood. Here is the same function from above rewritten to use this new syntax:
+
+```javascript
+const getMousePosition = (x, y) => ({ x, y });
+```
+
+__Exercise__
+
+Use simple fields with object literals to create and return a ```Person``` object.
+
+Before:
+
+```javascript
+const createPerson = (name, age, gender) => {
+  "use strict";
+  // change code below this line
+  return {
+    name: name,
+    age: age,
+    gender: gender
+  };
+  // change code above this line
+};
+console.log(createPerson("Zodiac Hasbro", 56, "male")); // returns a proper object
+```
+
+After:
+
+```javascript
+const createPerson = (name, age, gender) => {
+  "use strict";
+  // change code below this line
+    ({name, age, gender});
+  // change code above this line
+};
+console.log(createPerson("Zodiac Hasbro", 56, "male")); // returns a proper object
+```
+
+<a data="concise-functions"></a>
+### ___Concise Declarative Functions___
+
+When defining functions within objects in ES5, we have to use the keyword ```function``` as follows:
+
+```javascript
+const person = {
+  name: "Taylor",
+  sayHello: function() {
+    return `Hello! My name is ${this.name}.`;
+  }
+};
+```
+
+With ES6, You can remove the ```function``` keyword and colon altogether when defining functions in objects. Here's an example of this syntax:
+
+```javascript
+const person = {
+  name: "Taylor",
+  sayHello() {
+    return `Hello! My name is ${this.name}.`;
+  }
+};
+```
+
+__Exercise__
+
+Refactor the function ```setGear``` inside the object ```bicycle``` to use the shorthand syntax described above.
+
+Before:
+
+```javascript
+// change code below this line
+const bicycle = {
+  gear: 2,
+  setGear: function(newGear) {
+    "use strict";
+    this.gear = newGear;
+  }
+};
+// change code above this line
+bicycle.setGear(3);
+console.log(bicycle.gear);
+```
+
+After:
+
+```javascript
+// change code below this line
+const bicycle = {
+  gear: 2,
+  setGear(newGear) {
+    "use strict";
+    this.gear = newGear;
+  }
+};
+// change code above this line
+bicycle.setGear(3);
+console.log(bicycle.gear);
+```
+
+<a data="classes-constructor"></a>
+### ___Classes and Constructors in ES6___
+
+In ES5, we usually define a constructor function, and use the ```new``` keyword to instantiate an object.
+
+```javascript
+var SpaceShuttle = function(targetPlanet){
+  this.targetPlanet = targetPlanet;
+}
+var zeus = new SpaceShuttle('Jupiter');
+```
+
+In ES6, the class syntax simply replaces the constructor function creation:
+
+```javascript
+class SpaceShuttle {
+  constructor(targetPlanet){
+    this.targetPlanet = targetPlanet;
+  }
+}
+const zeus = new SpaceShuttle('Jupiter');
+```
+
+Notice that the class keyword declares a new function, and a constructor was added, which would be invoked when new is called - to create a new object.
+
+__Exercise__
+
+Use ```class``` keyword and write a proper constructor to create the ```Vegetable``` class.
+
+The ```Vegetable``` lets you create a vegetable object, with a property ```name```, to be passed to constructor.
+
+Before:
+
+```javascript
+function makeClass() {
+  "use strict";
+  /* Alter code below this line */
+
+  /* Alter code above this line */
+  return Vegetable;
+}
+const Vegetable = makeClass();
+const carrot = new Vegetable('carrot');
+console.log(carrot.name); // => should be 'carrot'
+```
+
+After:
+```javascript
+function makeClass() {
+  "use strict";
+  /* Alter code below this line */
+  class Vegetable {
+    constructor(name){
+      this.name = name;
+    }
+  }
+  /* Alter code above this line */
+  return Vegetable;
+}
+const Vegetable = makeClass();
+const carrot = new Vegetable('carrot');
+console.log(carrot.name); // => should be 'carrot'
+```
+
+<a data="object-access-control"></a>
+### ___Object Access Control___
+
+You can obtain values from an object, and set a value of a property within an object. These are classically called ___getters___ and ___setters___.
+
+Getter functions are meant to simply return (get) the value of an object's private variable to the user without the user directly accessing the private variable.
+
+Setter functions are meant to modify (set) the value of an object's private variable based on the value passed into the setter function. This change could involve calculations, or even overwriting the previous value completely.
+
+```javascript
+class Book {
+  constructor(author) {
+    this._author = author;
+  }
+  // getter
+  get writer(){
+    return this._author;
+  }
+  // setter
+  set writer(updatedAuthor){
+    this._author = updatedAuthor;
+  }
+}
+const lol = new Book('anonymous');
+console.log(lol.writer);  // anonymous
+lol.writer = 'wut';
+console.log(lol.writer);  // wut
+```
+
+Getters and setters are important, because they hide internal implementation details.
+
+__Exercise__
+
+Use ```class``` keyword to create a Thermostat class. The constructor accepts Fahrenheit temperature.
+
+Now create ```getter``` and ```setter``` in the class, to obtain the temperature in Celsius scale.
+
+Note:
+
+When you implement this, you would be tracking the temperature inside the class in one scale - either Fahrenheit or Celsius.
+
+This is the power of getter or setter - you are creating an API for another user, who would get the correct result, no matter which one you track.
+
+In other words, you are abstracting implementation details from the consumer.
+
+Before:
+
+```javascript
+function makeClass() {
+  "use strict";
+  /* Alter code below this line */
+
+  /* Alter code above this line */
+  return Thermostat;
+}
+const Thermostat = makeClass();
+const thermos = new Thermostat(76); // setting in Fahrenheit scale
+let temp = thermos.temperature; // 24.44 in C
+thermos.temperature = 26;
+temp = thermos.temperature; // 26 in C
+```
+
+After:
+```javascript
+function makeClass() {
+  "use strict";
+  /* Alter code below this line */
+  class Thermostat{
+    constructor (temperature){
+      this._temperature = temperature;
+    } 
+    get celcius(){
+      return 0.5555555556 * (temperature - 32);
+    }
+    set temperature(updatedTemp){
+      this._temperature = updatedTemp * 9 / (5 + 32);
+    }
+  }
+  /* Alter code above this line */
+  return Thermostat;
+}
+const Thermostat = makeClass();
+const thermos = new Thermostat(76); // setting in Fahrenheit scale
+let temp = thermos.temperature; // 24.44 in C
+thermos.temperature = 26;
+temp = thermos.temperature; // 26 in C
+```
+
+<a data="import-require"></a>
+### ___Import and Require___
+
+In the past, the function ```require()``` would be used to import the functions and code in external files and modules. While handy, this presents a problem: some files and modules are rather large, and you may only need certain code from those external resources.
+
+ES6 gives us a very handy tool known as import. With it, we can choose which parts of a module or file to load into a given file, saving time and memory.
+
+Consider the following example. Imagine that ```math_array_functions``` has about 20 functions, but I only need one, ```countItems```, in my current file. The old ```require()``` approach would force me to bring in all 20 functions. With this new ```import``` syntax, I can bring in just the desired function, like so:
+
+```javascript
+import { countItems } from "math_array_functions"
+```
+
+A description of the above code:
+
+```javascript
+import { functionName } from "file_path_goes_here"
+// We can also import variables the same way!
+```
+
+```import``` is a non-browser feature and requires an ES6 compiler.
+
+<a data="export-reuse-code-block"></a>
+### ___Export to Reuse a Code Block___
+
+```export``` is a non-browser feature just like ```import```. The following is what we refer to as a named export. With this, we can import any code we export into another file with ```import```.
+
+```javascript
+const capitalizeString = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+export { capitalizeString } //How to export functions.
+export const foo = "bar"; //How to export variables.
+```
+
+Alternatively, if you would like to compact all your export statements into one line, you can take this approach:
+
+```javascript
+const capitalizeString = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+const foo = "bar";
+export { capitalizeString, foo }
+```
+
+<a data="asterisks"></a>
+### ___Use * to Import Everything from a File___
+
+Suppose you have a file that you wish to import all of its contents into the current file. This can be done with the ```import *``` syntax.
+
+Exmaple:
+
+```javascript
+import * as myMathModule from "math_functions";
+myMathModule.add(2,3);
+myMathModule.subtract(5,3);
+```
+
+And breaking down that code:
+
+```javascript
+import * as object_with_name_of_your_choice from "file_path_goes_here"
+object_with_name_of_your_choice.imported_function
+```
+
+You may use any name following the ```import * as``` portion of the statement. In order to utilize this approah, it requires that you import an object that receives the imported values.
+
+<a data="export-fallback"></a>
+### ___Export Fallback___
+
+Export default is usually used if you only have one value that is being exported from a file. It is also used to create a fallback value for a file or module. 
+
+```javascript
+export default function add(x,y) {
+  return x + y;
+}
+```
+Since export default is used to declare a fallback value for a module or file, you can only have one value be a default export in each module or file. Additionally, you cannot use export default with var, let, or const
+
+
+<a data="import-fallback"></a>
+### ___Import Fallback___
+
+The syntax to import a default value is as follows:
+
+```javascript
+import add from "math_functions";
+add(5,4); //Will return 9
+```
+
