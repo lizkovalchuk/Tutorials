@@ -13,6 +13,7 @@
 10. [ Destructuring Assignment ](#destructuring-assignment)
 11. [ Destructing Assignment From Nested Objects ](#destructuring-from-nested-objects)
 12. [ Destructing Assignment From Arrays ](#destructuring-from-arrays)
+13. [ Reassigning Array Elements with Destructuring and Rest Operator ](#reassign-array-els-w-destructuring-and-RO)
 
 
 <a data="intro"></a>
@@ -120,12 +121,12 @@ You can pass more than one argument into arrow functions as well.
 <a data="higher-order-functions"></a>
 ### ___Higher Order Functions___
 
-Arrow functions work really well with higher order functions, such as ```map()```, ```filter()```, and ```reduce()```, that take other functions as arguments for processing collections of data.
+Arrow functions work really well with higher order functions, such as ```.map()```, ```.filter()```, and ```.reduce()```, that take other functions as arguments for processing collections of data.
 
 
-#### ```.Map()```
+#### ```.map()```
 
-The ```map()``` method creates a new array with the results of calling a provided function on every element in the calling array.
+The ```.map()``` method creates a new array with the results of calling a provided function on every element in the calling array.
 
 Example:
 ```javascript
@@ -138,9 +139,9 @@ console.log(map1);
 // expected output: Array [2, 8, 18, 32]
 ```
 
-#### ```.Filter()```
+#### ```.filter()```
 
-The ```filter()``` method creates an array filled with all array elements that pass a test (provided as a function).
+The ```.filter()``` method creates an array filled with all array elements that pass a test (provided as a function).
 
 This example shows using the filter method without arrow function syntax:
 ```Javascript
@@ -154,9 +155,9 @@ This example shows the code from the previous example expressed using arrow func
 FBPosts.filter((post) => post.thumbnail !== null && post.shares > 100 && post.likes > 500)
 ```
 
-#### ```.Filter()```
+#### ```.reduce()```
 
-The ```reduce()``` method executes a ```reducer``` function (that you provide) on each member of the array resulting in a single output value.
+The ```.reduce()``` method executes a ```reducer``` function (that you provide) on each member of the array resulting in a single output value.
 
 
 Example:
@@ -214,7 +215,7 @@ Note that in this example, one must cast x with ```parseInt``` to return an inte
 <a data="default-parameters"></a>
 ### ___Default Parameters___
 
-The default parameter are used when a passed argument is undefined. 
+The default parameter is used when a passed argument is undefined. 
 ```javascript
 function greeting(name = "Anonymous") {
   return "Hello " + name;
@@ -246,7 +247,7 @@ After:
 ```javascript
 const increment = (function() {
   "use strict";
-  return function increment(number, value  = 1) {
+  return function increment(number, value = 1) {
     return number + value;
   };
 })();
@@ -267,7 +268,7 @@ console.log(howMany(0, 1, 2)); // You have passed 3 arguments
 console.log(howMany("string", null, [1, 2, 3], { })); // You have passed 4 arguments.
 ```
 
-The rest operator eliminates the need to check the args array and allows us to apply ```map()```, ```filter()``` and ```reduce()``` on the parameters array.
+The rest operator eliminates the need to check the args array and allows us to apply ```.map()```, ```.filter()``` and ```.reduce()``` on the parameters array.
 
 __Exercise:__
 
@@ -531,3 +532,12 @@ console.log(b); // should be 8
 // However that will keep the effect of assignment local.
 ```
 
+<a data="reassign-array-els-w-destructuring-and-RO"></a>
+### ___Reassign Array Elements with Destructuring and Rest Operator___
+
+In some situations involving array destructuring, we might want to collect the rest of the elements into a separate array. The result is similar to Array.prototype.slice(), as shown below:
+```javascript
+const [a, b, ...arr] = [1, 2, 3, 4, 5, 7];
+console.log(a, b); // 1, 2
+console.log(arr); // [3, 4, 5, 7]
+```
