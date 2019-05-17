@@ -1,5 +1,7 @@
 // ARROW FUNCTIONS
 
+/*
+
 function sayHello(){
   console.log("hello");
 }
@@ -18,19 +20,24 @@ sayHelloFromES6three('Liz');
 
 const sayHelloFromES6four = name => console.log(`Hello from ${name}`);
 sayHelloFromES6four('Liz2');
+
+*/
+
 // FOREACH
 
 const fruits = ['Apples', 'Oranges', 'Grapes'];
 
 fruits.forEach((fruit, index) =>{
-  console.log(fruit);
+  console.log(fruit + " from multi-line function");
 })
 
 // and since this is only one line, you can reduce the above to: 
 
-fruits.forEach((fruit, index) => console.log(fruit));
+fruits.forEach((fruit, index) => console.log(fruit + " from single line-function"));
 
 // MAP
+
+/*
 
 const singleFruit = fruits.map(fruit => fruit.slice(0,-1));
 console.log(singleFruit);
@@ -195,3 +202,5 @@ export default Person ;
 
 import { name, nums } from 'file1'; 
 import Person from 'file1'; 
+
+*/
