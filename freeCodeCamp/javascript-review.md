@@ -1,7 +1,7 @@
 # JavaScript Review
 ## Free Code Camp Intro to JavaScript Tutorial Notes
 
-1. [ Variables and Data Types ](#vars-data-types)
+1. [ Variables and Data Types ](#variables-and-data-types)
 2. [ Escape Characters ](#esc-chars)
 3. [ Length ](#length) 
 4. [ Bracket Notation ](#bracket-notation) 
@@ -24,7 +24,7 @@
 
 
 
-<a name="vars-data-types"></a>
+<a name="variables-and-data-types"></a>
 ### ___Variables and Data Types___ 
 JavaScript provides seven different data types which are undefined, null, boolean, string, symbol, number, and object. Variable names can be made up of numbers, letters, and $ or _, but may not contain spaces or start with a number.
 
