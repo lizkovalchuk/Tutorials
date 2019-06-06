@@ -32,6 +32,12 @@
 28. [ Magic Eight Ball Toy Exercise ](#magic-eight-ball-to-exercise)
 29. [ Render with an If/Else Condition ](#render-with-an-if/else-condition)
 30. [ Use && for a More Concise Conditional ](#use-&&-for-a-more-concise-conditonal)
+31. [ Ternary Expression for Conditional Rendering ](#ternary-expression-for-conditional-rendering)
+32. [ Render Conditionally from Props ](#render-conditionally-from-props)
+33. [ Conditional CSS ](#conditional-css)
+34. [ Array.map ](#array.map)
+35. [ Array.filter ](#array.filter)
+36. [ Render React on the Server with renderToString ](#render-react-on-the-server-with-rendertostring)
 
 
 <a name="jsx-elements"></a>
@@ -2113,4 +2119,695 @@ Instead, you can use the && logical operator to perform conditional logic in a m
 {condition && <p>markup</p>}
 ```
 
-If the `condition` is `true`, the markup will be returned. If the condition is `false`, the operation will immediately return false after evaluating the condition and return nothing. You can include these statements directly in your JSX and string multiple conditions together by writing && after each one. 
+If the `condition` is `true`, the markup will be returned. If the condition is `false`, the operation will immediately return false after evaluating the condition and return nothing. You can include these statements directly in your JSX and string multiple conditions together by writing `&&` after each one. 
+
+**Exercise:**
+
+The `MyComponent` component below contains a `boolean` in its state which tracks whether you want to display some element in the UI or not. The `button` toggles the state of this value. Currently, it renders the same UI every time. Use the `&&` operator so the `h1` only renders if the display property is `true`.
+
+_Before:_
+
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true
+    }
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+  toggleDisplay() {
+    this.setState({
+      display: !this.state.display
+    });
+  }
+  render() {
+    // change code below this line
+    return (
+       <div>
+         <button onClick={this.toggleDisplay}>Toggle Display</button>
+         <h1>Displayed!</h1>
+       </div>
+    );
+  }
+};
+```
+
+_After:_
+
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true
+    }
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+  toggleDisplay() {
+    this.setState({
+      display: !this.state.display
+    });
+  }
+  render() {
+    // change code below this line
+    return (
+       <div>
+         <button onClick={this.toggleDisplay}>Toggle Display</button>
+         {this.state.display == true && <h1>Displayed!</h1>}
+       </div>
+    );
+  }
+};
+```
+
+<a name="ternary-expression-for-conditional-rendering"></a>
+
+### **_Ternary Expression for Conditional Rendering_**
+
+The ternary operator is often utilized as a shortcut for if/else statements in JavaScript. One reason ternary expressions are so popular in React is because `if/else` statements can't be inserted directly into JSX code. (`if/else` are always outside the return statement.) Recall that a ternary operator has three parts, but you can combine several ternary expressions together. Here's the basic syntax:
+
+```jsx
+condition ? expressionIfTrue : expressionIfFalse
+```
+
+**Exercise:**
+
+The code editor has three constants defined within the `CheckUserAge` component's `render()` method. They are called `buttonOne`, `buttonTwo`, and `buttonThree`. Each of these is assigned a simple JSX expression representing a button element. First, initialize the state of `CheckUserAge` with `input` and `userAge` both set to values of an empty string.
+
+Once the component is rendering information to the page, users should have a way to interact with it. Within the component's `return` statement, set up a ternary expression that implements the following logic: when the page first loads, render the submit button, `buttonOne`, to the page. Then, when a user enters their age and clicks the button, render a different button based on the age. If a user enters a number less than `18`, render `buttonThree`. If a user enters a number greater than or equal to `18`, render `buttonTwo`.
+
+_Before:_
+
+```jsx
+const inputStyle = {
+  width: 235,
+  margin: 5
+}
+
+class CheckUserAge extends React.Component {
+  constructor(props) {
+    super(props);
+    // change code below this line
+
+    // change code above this line
+    this.submit = this.submit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    this.setState({
+      input: e.target.value,
+      userAge: ''
+    });
+  }
+  submit() {
+    this.setState({
+      userAge: this.state.input
+    });
+  }
+  render() {
+    const buttonOne = <button onClick={this.submit}>Submit</button>;
+    const buttonTwo = <button>You May Enter</button>;
+    const buttonThree = <button>You Shall Not Pass</button>;
+    return (
+      <div>
+        <h3>Enter Your Age to Continue</h3>
+        <input
+          style={inputStyle}
+          type="number"
+          value={this.state.input}
+          onChange={this.handleChange} /><br />
+        {
+          /* change code here */
+        }
+      </div>
+    );
+  }
+};
+```
+
+_After:_
+
+```jsx
+const inputStyle = {
+  width: 235,
+  margin: 5
+}
+
+class CheckUserAge extends React.Component {
+  constructor(props) {
+    super(props);
+    // change code below this line
+    this.state = {
+      input : '',
+      userAge : ''
+    }
+    // change code above this line
+    this.submit = this.submit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    this.setState({
+      input: e.target.value,
+      userAge: ''
+    });
+  }
+  submit() {
+    this.setState({
+      userAge: this.state.input
+    });
+  }
+  render() {
+    const buttonOne = <button onClick={this.submit}>Submit</button>;
+    const buttonTwo = <button>You May Enter</button>;
+    const buttonThree = <button>You Shall Not Pass</button>;
+    return (
+      <div>
+        <h3>Enter Your Age to Continue</h3>
+        <input
+          style={inputStyle}
+          type="number"
+          value={this.state.input}
+          onChange={this.handleChange} /><br />
+        {
+          /* change code here */
+          (this.state.userAge >= 18) ? buttonTwo : (this.state.userAge== '')? buttonOne: buttonThree
+        }
+      </div>
+    );
+  }
+};
+```
+
+
+<a name="render-conditionally-from-props"></a>
+
+### **_Render Conditionally from Props_**
+
+Using props to conditionally render code is very common with React developers — that is, they use the value of a given prop to automatically make decisions about what to render.
+
+**Exercise:**
+
+There are  2 components set up, a parent called `GameOfChance`, and a child called `Results`. They are used to create a simple game where the user presses a button to see if they win or lose.
+
+Use `Math.random()` (this method returns a value between `0` (inclusive) and `1` (exclusive) each time it is called) to produce 50/50 odds (use `Math.random() > .5` in your expression. Statistically speaking, this expression will return true 50% of the time, and false the other 50%.)
+
+Render the `Results` component as a child of `GameOfChance`, and pass in `expression` as a prop called `fiftyFifty`. In the `Results` component, write a ternary expression to render the text `"You win!"` or `"You lose!"` based on the `fiftyFifty` prop that's being passed in from `GameOfChance`. Finally, make sure the `handleClick()` method is correctly counting each turn so the user knows how many times they've played. This also serves to let the user know the component has actually updated in case they win or lose twice in a row.
+
+
+_Before:_
+
+```jsx
+class Results extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <h1>
+      {
+        /* change code here */
+      }
+      </h1>
+    )
+  };
+};
+
+class GameOfChance extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 1
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState({
+      counter: 0 // change code here
+    });
+  }
+  render() {
+    let expression = null; // change code here
+    return (
+      <div>
+        <button onClick={this.handleClick}>Play Again</button>
+        { /* change code below this line */ }
+
+        { /* change code above this line */ }
+        <p>{'Turn: ' + this.state.counter}</p>
+      </div>
+    );
+  }
+};
+```
+
+_After:_
+
+```jsx
+class Results extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <h1>
+      {
+        this.props.fiftyFifty
+      }
+      </h1>
+    )
+  };
+};
+
+class GameOfChance extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 1
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState({
+      counter: this.state.counter + 1 
+    });
+  }
+  render() {
+    let expression = Math.random() > .5; 
+    return (
+      <div>
+        <button onClick={this.handleClick}>Play Again</button>
+        { /* change code below this line */ }
+        {(expression == 1)? <Results fiftyFifty="You win!"/> : <Results fiftyFifty="You lose!"/> }
+        { /* change code above this line */ }
+        <p>{'Turn: ' + this.state.counter}</p>
+      </div>
+    );
+  }
+};
+```
+
+
+<a name="conditional-css"></a>
+
+### **_Conditional CSS_**
+
+**Exercise:**
+
+The code editor has a simple controlled input component with a styled border. You want to style this border red if the user types more than 15 characters of text in the input box. Add a condition to check for this and, if the condition is valid, set the input border style to `3px solid red`. You can try it out by entering text in the input.
+
+
+_Before:_
+
+```jsx
+class GateKeeper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    this.setState({ input: event.target.value })
+  }
+  render() {
+    let inputStyle = {
+      border: '1px solid black'
+    };
+    // change code below this line
+
+    // change code above this line
+    return (
+      <div>
+        <h3>Don't Type Too Much:</h3>
+        <input
+          type="text"
+          style={inputStyle}
+          value={this.state.input}
+          onChange={this.handleChange} />
+      </div>
+    );
+  }
+};
+```
+
+_After:_
+
+```jsx
+class GateKeeper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    this.setState({ input: event.target.value })
+  }
+  render() {
+    let inputStyle = {
+      border: '1px solid black'
+    };
+    // change code below this line
+    if (this.state.input.length > 15) {
+      inputStyle.border = '3px solid red';
+    }
+    // change code above this line
+    return (
+      <div>
+        <h3>Don't Type Too Much:</h3>
+        <input
+          type="text"
+          style={inputStyle}
+          value={this.state.input}
+          onChange={this.handleChange} />
+      </div>
+    );
+  }
+};
+```
+
+<a name="array.map"></a>
+
+### **_Array.map_**
+
+Array.map() is perfect for when you need your components to render an unknown number of elements. When you create an array of elements, each one needs a key attribute set to a unique value. React uses these keys to keep track of which items are added, changed, or removed. ( Note that keys only need to be unique between sibling elements, they don't need to be globally unique in your application.)
+
+**Exercise:**
+
+This exercise is a ToDo list. Below, most of the `MyToDoList` component is set up. Inside the `constructor`, create a `this.state` object and define two states: `userInput` should be initialized as an empty string, and `toDoList` should be initialized as an empty array. Next, delete the comment in the `render()` method next to the items `variable`. In its place, map over the `toDoList` array stored in the component's internal state and dynamically render a `li` for each item. Try entering the string `eat, code, sleep, repeat` into the `textarea`, then click the button and see what happens.
+
+
+_Before:_
+
+```jsx
+const textAreaStyles = {
+  width: 235,
+  margin: 5
+};
+
+class MyToDoList extends React.Component {
+  constructor(props) {
+    super(props);
+    // change code below this line
+
+    // change code above this line
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleSubmit() {
+    const itemsArray = this.state.userInput.split(',');
+    this.setState({
+      toDoList: itemsArray
+    });
+  }
+  handleChange(e) {
+    this.setState({
+      userInput: e.target.value
+    });
+  }
+  render() {
+    const items = null; // change code here
+    return (
+      <div>
+        <textarea
+          onChange={this.handleChange}
+          value={this.state.userInput}
+          style={textAreaStyles}
+          placeholder="Separate Items With Commas" /><br />
+        <button onClick={this.handleSubmit}>Create List</button>
+        <h1>My "To Do" List:</h1>
+        <ul>
+          {items}
+        </ul>
+      </div>
+    );
+  }
+};
+```
+
+_After:_
+
+```jsx
+const textAreaStyles = {
+  width: 235,
+  margin: 5
+};
+
+class MyToDoList extends React.Component {
+  constructor(props) {
+    super(props);
+    // change code below this line
+    this.state = {
+      userInput:'',
+      toDoList:[]
+    }
+    // change code above this line
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleSubmit() {
+    const itemsArray = this.state.userInput.split(',');
+    this.setState({
+      toDoList: itemsArray
+    });
+  }
+  handleChange(e) {
+    this.setState({
+      userInput: e.target.value
+    });
+  }
+  render() {
+    const items = this.state.toDoList.map(i => <li>{i}</li>); 
+    return (
+      <div>
+        <textarea
+          onChange={this.handleChange}
+          value={this.state.userInput}
+          style={textAreaStyles}
+          placeholder="Separate Items With Commas" /><br />
+        <button onClick={this.handleSubmit}>Create List</button>
+        <h1>My "To Do" List:</h1>
+        <ul>
+          {items}
+        </ul>
+      </div>
+    );
+  }
+};
+```
+
+**Exercise:**
+
+See the `frontEndFrameworks` array that has some front end frameworks and a stateless functional component named `Frameworks()`. `Frameworks()` needs to map the array to an unordered list. Finish writing the map callback to return an `li `element for each framework in the `frontEndFrameworks` array. This time, make sure to give each `li` a key attribute, set to a unique value.
+
+
+_Before:_
+
+```jsx
+const frontEndFrameworks = [
+  'React',
+  'Angular',
+  'Ember',
+  'Knockout',
+  'Backbone',
+  'Vue'
+];
+
+function Frameworks() {
+  const renderFrameworks = null; // change code here
+  return (
+    <div>
+      <h1>Popular Front End JavaScript Frameworks</h1>
+      <ul>
+        {renderFrameworks}
+      </ul>
+    </div>
+  );
+};
+```
+
+_After:_
+
+```jsx
+const frontEndFrameworks = [
+  'React',
+  'Angular',
+  'Ember',
+  'Knockout',
+  'Backbone',
+  'Vue'
+];
+
+function Frameworks() {
+const renderFrameworks = frontEndFrameworks.map(i => <li key={i+1}>{i}</li>); 
+  return (
+    <div>
+      <h1>Popular Front End JavaScript Frameworks</h1>
+      <ul>
+        {renderFrameworks}
+      </ul>
+    </div>
+  );
+};
+```
+
+<a name="array.filter"></a>
+
+### **_Array.filter_**
+
+`filter` filters the contents of an array based on a condition, then returns a new array. For example, if you have an array of `users` that all have a property `online` which can be set to `true` or `false`, you can filter only those `users` that are online by writing:
+
+```jsx
+let onlineUsers = users.filter(user => user.online);
+```
+
+**Exercise:**
+
+Filter the array so you see only the users who are online. To do this, first use `filter` to return a new array containing only the users whose `online` property is `true`. Then, in the `renderOnline` variable, map over the filtered array, and return a `li` element for each user that contains the text of their `username`. Be sure to include a unique `key` as well.
+
+
+_Before:_
+
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [
+        {
+          username: 'Jeff',
+          online: true
+        },
+        {
+          username: 'Alan',
+          online: false
+        },
+        {
+          username: 'Mary',
+          online: true
+        },
+        {
+          username: 'Jim',
+          online: false
+        },
+        {
+          username: 'Sara',
+          online: true
+        },
+        {
+          username: 'Laura',
+          online: true
+        }
+      ]
+    }
+  }
+  render() {
+    const usersOnline = null; // change code here
+    const renderOnline = null; // change code here
+    return (
+       <div>
+         <h1>Current Online Users:</h1>
+         <ul>
+           {renderOnline}
+         </ul>
+       </div>
+    );
+  }
+};
+```
+
+_After:_
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [
+        {
+          username: 'Jeff',
+          online: true
+        },
+        {
+          username: 'Alan',
+          online: false
+        },
+        {
+          username: 'Mary',
+          online: true
+        },
+        {
+          username: 'Jim',
+          online: false
+        },
+        {
+          username: 'Sara',
+          online: true
+        },
+        {
+          username: 'Laura',
+          online: true
+        }
+      ]
+    }
+  }
+  render() {
+    const usersOnline = this.state.users.filter(i => i.online); 
+    const renderOnline = usersOnline.map(i => <li key={i.username+1}>{i.username}</li>);  
+    return (
+       <div>
+         <h1>Current Online Users:</h1>
+         <ul>
+           {renderOnline}
+         </ul>
+       </div>
+    );
+  }
+};
+```
+
+<a name="render-react-on-the-server-with-rendertostring"></a>
+
+### **_Render React on the Server with renderToString_**
+
+There are some use cases where it makes sense to render a React component on the server. Since React is a JavaScript view library, you can run JavaScript on the server with Node using `renderToString()`.
+
+There are two key reasons why rendering on the server may be used in a real world app. First, without doing this, your React apps would consist of a relatively empty HTML file and a large bundle of JavaScript when it's initially loaded to the browser. This may not be ideal for search engines that are trying to index the content of your pages so people can find you.
+
+If you render the initial HTML markup on the server and send this to the client, the initial page load contains all of the page's markup which can be crawled by search engines. Second, this creates a faster initial page load experience because the rendered HTML is smaller than the JavaScript code of the entire app. React will still be able to recognize your app and manage it after the initial load.
+
+**Exercise:**
+
+The `renderToString()` method is provided on `ReactDOMServer`, which is available here as a global object. The method takes one argument which is a React element. Use this to render `App` to a string.
+
+_Before:_
+
+```jsx
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div/>
+  }
+};
+
+// change code below this line
+```
+
+_After:_
+
+```jsx
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div/>
+  }
+};
+
+ReactDOMServer.renderToString(<App />);
+```
