@@ -2,6 +2,10 @@
 
 1. [ How Firebase Authentication Works ](#how-firebase-authentication-works)
 2. [ Initial Set-up in Firebase Console ](#intial-set-up-firebase-console)
+3. [ Adding firebase to your React App ](#adding-firebase-to-your-react-app)
+4. [ Adding Auth to See Profile Page ](#adding-auth-to-see-profile-page)
+
+
 
 <a name="how-firebase-authentication-works"></a>
 
@@ -31,3 +35,46 @@ Log in to your Firebase console to adjust the services that you would like Fireb
 
 ![Users in the Firebase console](./images/firebase-3.png)
 
+4. Next you need to get a special authentication object for your app. Start by adding your web app to your firebase project.
+
+![Add web app to project](./images/firebase-4.png)
+
+5. Once you add your project to your web app, you will be provided with a firebase object that contains all the necessary credentials. 
+
+![Paste firebase object into project](./images/firebase-5.png)
+
+
+<a name="adding-firebase-to-your-react-app"></a>
+
+### **_Adding firebase to your React App_**
+
+- Install the firebase module with `npm install --save firebase`
+- Create a folder named `config` inside `src` that is on the same level as `components` and `assets`.
+- Inside `config`, create a file and name it `fire.js`
+
+![Adding firebase object to project](./images/firebase-6.png)
+
+
+<a name="adding-auth-to-see-profile-page"></a>
+
+### **_Adding Auth to See Profile Page_**
+
+
+- As an example, this tutorial shows the following:
+  - A user should not be able to go to the profile page until they've signed in.
+  - When the user logs out, they are redirected to the home screen.
+
+Here are the steps to accomplish this:
+
+1. You will need to import `fire` from your `config` folder in the component that will take care of conditional rendering.
+2. Next, we need to create an Authentication Listener, which uses methods defined the firebase module. This function will be called whenever the authentication state changes. Place this function above any component that will take care of conditional rendering. This function will return a user object with a callback.
+3. You will need to create a state for the component that is taking care of conditional rendering so you can save whether a user is signed in or not.
+4. Call your authentication listener during `componentDidMount()`
+
+```jsx
+
+```
+
+
+
+https://www.youtube.com/watch?v=r4EsP6rovwk at 11:25
