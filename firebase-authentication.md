@@ -25,7 +25,7 @@ Log in to your Firebase console to adjust the services that you would like Fireb
 
 1. Go to your firebase console, click on the Authentication tab and click on the "Set up sign-in method".
 
-![Firebase console prior to enabling email and password authentication](./images/firebase-1.png)
+ 
 
 2. For this tutorial, we will focus on the "Email/Password" way of authentication users. Click "Email/Passwork" and enable this type of authentication with the enable toggle in the modal.
 
