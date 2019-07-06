@@ -33,7 +33,7 @@ In redux, we need to define something action types. In the Context API, actions 
 export const GET_CONTACTS = 'GET_CONTACTS';
 ```
 
-Creating an `actions` folder and `types.js` file gives us a central place for all of our types. Once an action type has been defined, we're ready to start implementing getting the state from a reducer.
+Creating an `actions` folder and `types.js` file gives us a central place for all of our action types. Once an action type has been defined, we're ready to start implementing getting the state from a reducer.
 
 <a data="state-from-reducer"></a>
 
@@ -89,7 +89,7 @@ class Contacts extends Component {
 export default Contacts;
 ```
 
-The following steps show how we are going to get state from a reducer rather then the state of a component. 
+The following steps show how we are going to get state from a reducer rather than the state of a component. 
 
 1. Grab the `contact` array from `Contacts.js`'s state and move it to the initial state of your `contactReducer.js` file:
 
@@ -188,7 +188,7 @@ export default function (state = initialState, action) {
 }
 ```
 
-For now, we'll have the case `GET_CONTACT` in our switch statement simply return the state.
+For now, we'll have the case `GET_CONTACT` in our switch statement to simply return the state.
 
 <a data="state-from-reducer-to-component"></a>
 
@@ -196,14 +196,14 @@ For now, we'll have the case `GET_CONTACT` in our switch statement simply return
 
 Once we have an action type defined and a case for it in our reducers switch statement, it's time to pass the state from the reducer to the component. In our case, we want to send the state in `contactsReducer.js` to our `Contacts.js` component.
 
-1. In order to get state from a reducer, we need to get something called `connect` from `react-redux`. 
+1. In order to get state from a reducer into a component, we need to get something called `connect` from `react-redux`. 
     - Inside `Contacts.js` is where we need state from our `contactsReducer.js`. Therefore, import `connect` from `react-redux` inside `Contacts.js`
-    - We'll also need `propTypes` because when we have an action, it's called as a prop. When anything from the redux state is called, it is out into props.
+    - We'll also need `propTypes` because when we have an action, it's called as a prop. When anything from the redux state is called, it is called into props.
     - In order to use `connect` from `react-redux`, go to the bottom of `Contacts.js` to adjust the export statement.
-      - Instead of exporting the component directly (`export default Contacts;`), we'll need to export `connect` and then wrap the component name in parentheses.
+      - Instead of exporting the component directly (`export default Contacts;`), we'll need to export `connect` and then wrap the component name in parentheses. See Figure 1 - Contacts.js
 
 
-#### Contacts.js
+##### Figure 1 - Contacts.js
 
 ```jsx
 import React, { Component } from 'react';
@@ -232,11 +232,11 @@ export default connect()(Contacts);
 ```
 
 2. The `connect` method in the export statement in `Contacts.js` is not complete yet though. We need to assign `props` from the state in `contactReducer.js` to a variable in `Contact.js` in order to pass it to `connect()`.
-    - In our `rootReducer` (which is `reducers/index.js`), we defined the data from `contactReducer.js` as `contact` as seen in Figure 1 - reducers/index.js
-    - In `Contacts.js`, we need to create an arrow function that will assign the data inside `contact` from our `rootReducer` to a `Contacts.js` property as seen in Figure 2 - Contacts.js. Figure 3 - Contacts.js will show the entire component without read annotations.
+    - In our `rootReducer` (which is `reducers/index.js`), we defined the data from `contactReducer.js` as `contact` as seen in Figure 2 - reducers/index.js
+    - In `Contacts.js`, we need to create an arrow function that will assign the data inside `contact` from our `rootReducer` to a `Contacts.js` property as seen in Figure 3 - Contacts.js. Figure 3 - Contacts.js will show the entire component without read annotations.
 
 
-#### Figure 1 - reducers/index.js
+##### Figure 2 - reducers/index.js
 
 ```jsx
 import { combineReducers } from 'redux';
@@ -247,11 +247,11 @@ export default combineReducers({
 });
 ```
 
-#### Figure 2 - Contacts.js
+##### Figure 3 - Contacts.js
 
 ![Assigning the state of a reducer to the prop of a component](./images/redux-4.png)
 
-#### Figure 3 - Contacts.js
+#### Figure 4 - Contacts.js
 
 ```jsx
 import React, { Component } from 'react';
@@ -284,9 +284,9 @@ export default connect()(Contacts);
 
 3. Similarly to how we assigned the data from our reducers' state to a local property, we need to create a const (or function) that will map dispatch to the component's props.
     - Create a `const` called `mapDispatchToProps` and make it an arrow function that takes in `dispatch` as a parameter.
-    - The purpose of `mapDispatchToProps` is to define a function which will execute the action defined in `actions/types.js`. In Figure 4 - Contacts.js, we are creating a function called `getContacts` that is calling `dispatch`. We need to pass in an action to `dispatch` which is an object with a type of `GET_CONTACTS` from `actions/types.js`. Do remember that you'll need to import `GET_CONTACTS` from `actions/types.js` as well.
+    - The purpose of `mapDispatchToProps` is to define a function which will execute the action defined in `actions/types.js`. In Figure 5 - Contacts.js, we are creating a function called `getContacts` that is calling `dispatch`. We need to pass in an action to `dispatch` which is an object with a type of `GET_CONTACTS` from `actions/types.js`. Do remember that you'll need to import `GET_CONTACTS` from `actions/types.js` as well.
 
-#### Figure 4 - Contacts.js
+##### Figure 5 - Contacts.js
 
 ```jsx
 import React, { Component } from 'react';
