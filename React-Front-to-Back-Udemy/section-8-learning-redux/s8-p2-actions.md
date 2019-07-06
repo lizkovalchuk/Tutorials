@@ -231,9 +231,9 @@ export default connect()(Contacts);
 
 ```
 
-2. The `connect` method in the export statement in `Contacts.js` is not complete yet though. We need to assign `props` from the state in `contactReducer.js` to a variable in `Contact.js` in order to pass it to `connect()`.
+2. The `connect` method in the export statement in `Contacts.js` is not complete yet though. We need to assign `props` to `Contacts.js` with values from the state in `contactReducer.js` and then pass those `props` to `connect()`.
     - In our `rootReducer` (which is `reducers/index.js`), we defined the data from `contactReducer.js` as `contact` as seen in Figure 2 - reducers/index.js
-    - In `Contacts.js`, we need to create an arrow function that will assign the data inside `contact` from our `rootReducer` to a `Contacts.js` property as seen in Figure 3 - Contacts.js. Figure 3 - Contacts.js will show the entire component without read annotations.
+    - In `Contacts.js`, we need to create an arrow function that will assign the data inside `contact` from our `rootReducer` to a `Contacts.js` property as seen in Figure 3 - Contacts.js. Figure 4 - Contacts.js will show the entire component without red annotations.
 
 
 ##### Figure 2 - reducers/index.js
@@ -282,7 +282,7 @@ const mapStateToProps = (state) => ({
 export default connect()(Contacts);
 ```
 
-3. Similarly to how we assigned the data from our reducers' state to a local property, we need to create a const (or function) that will map dispatch to the component's props.
+3. Similarly to how we assigned the data from our reducers' state to a local property, we need to create a const (or function) that will map dispatch to the component's props as well.
     - Create a `const` called `mapDispatchToProps` and make it an arrow function that takes in `dispatch` as a parameter.
     - The purpose of `mapDispatchToProps` is to define a function which will execute the action defined in `actions/types.js`. In Figure 5 - Contacts.js, we are creating a function called `getContacts` that is calling `dispatch`. We need to pass in an action to `dispatch` which is an object with a type of `GET_CONTACTS` from `actions/types.js`. Do remember that you'll need to import `GET_CONTACTS` from `actions/types.js` as well.
 
@@ -331,7 +331,9 @@ export default connect()(Contacts);
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
 ```
 
-5. Next, we need to do is implement `propTypes` as seen in Figure 5 - Contacts.js
+5. Next, we need to implement `propTypes` as seen in Figure 5 - Contacts.js
+
+##### Figure 5 - Contacts.js
 
 ```jsx
 Contacts.PropTypes = {
@@ -343,6 +345,8 @@ Contacts.PropTypes = {
 6. The last thing we need to do is call `getContacts` which we've defined in `mapDispatchToProps`. 
     - The best place to call it is in `componentDidMount()` as seen in Figure 6 - Contacts.js.
     - Once `getContacts` gets called in `componentDidMount()`, `getContacts` is going to put the contacts into the local props of the component. As a result, we need to destructure from the component's properties, not the state, which results in needed to adjust the destructuring in the `render()` method of `Contacts.js`.
+
+##### Figure 6 - Contacts.js
 
 ```jsx
 import React, { Component } from 'react';
@@ -387,9 +391,9 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
 ```
 
-You can always see the actions being called in the Redux dev tools as seen in Figure 6 - Actions in Redux Dev Tools.
+You can always see the actions being called in the Redux dev tools as seen in Figure 7 - Actions in Redux Dev Tools.
 
-##### Figure 6 - Actions in Redux Dev Tools
+##### Figure 7 - Actions in Redux Dev Tools
 
 ![Assigning the state of a reducer to the prop of a component](./images/redux-5.png)
 
