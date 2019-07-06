@@ -71,7 +71,7 @@ export default combineReducers({
 
 ##### Figure 3
 
-![The importance of labelling your reducer when setting them](./images/redux-2.png)
+![The importance of labeling your reducer when setting them](./images/redux-2.png)
 
 ##### Figure 4
 
