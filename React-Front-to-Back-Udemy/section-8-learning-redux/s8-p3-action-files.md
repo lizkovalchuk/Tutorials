@@ -111,7 +111,7 @@ import { getContacts } from '../../actions/contactActions'
 ##### Figure 5 - contactActions.js using mapDispatchToProps()
 
 ```jsx
-import { GET_CONTACTS } from '../../actions/types';
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
 ```
 
 ##### Figure 6 - contactActions.js using getContacts from contactActions.js
