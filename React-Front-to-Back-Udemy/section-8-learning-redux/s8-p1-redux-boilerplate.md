@@ -5,7 +5,7 @@
 
 1. [ Redux Initial Setup ](#redux-intial-setup)
 2. [ Redux Store ](#redux-store)
-3. [ Adding Redux Store to App.js ](#adding-redux-store-to-app.js)
+3. [ Adding Redux Store ](#adding-redux-store)
 4. [ Viewing State in Redux Dev Tool ](#viewing-state-in-redux-dev-tool)
 
 
@@ -164,9 +164,9 @@ const store = createStore(rootReducer, initialState, compose(
 export default store;
 ```
 
-<a data="adding-redux-store-to-app.js"></a>
+<a data="adding-redux-store"></a>
 
-### **Adding Redux Store to App.js**
+### **Adding Redux Store**
 
 1. Import `store` from `store.js` into `App.js`.
 2. Similarly to when using the context API, we need to `import` a `Provider` from redux.
