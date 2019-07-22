@@ -11,8 +11,9 @@
 ### **Deploy to Apache**
 
 
-1. Run `npm run-script build` in your terminal. A `build` folder will be created as a result.
-2. Open the build folder, and move all the contents in that folder to where it needs to be in either FileZilla or cpanel.
+1. Check that the `"homepage"` value in your `package.json` file is set correctly.  
+2. Run `npm run-script build` in your terminal. A `build` folder will be created as a result.
+3. Open the build folder, and move all the contents in that folder to where it needs to be in either FileZilla or cpanel.
 
 <a data="uploading-to-subdirectory"></a>
 
