@@ -14,6 +14,17 @@ Google has been releasing new versions of Angular every six months. The majoy ov
 
 #### What's new with Angular 8?
 
+##### Ivy Engine
+
 A signifiant change in Angular 8 is the _Ivy Engine_. Angular uses a visual rendering engine that is going to be replaced with _Ivy Engine_ (Ivy Engine is still in beta and will be more prominent in Angular 9). The visual rendering API remains unchanged, meaning that how you code doesn't change very much, but the way your code gets rendered has changed a lot. 
 
-Another significant change is w
+##### Bezel
+
+Another significant change is the _Bezel Engine_. Bezel is used to _____ your dependencies. Bezel is very similar to webpack. Bezel does not replace Webpack. Bezel serializes your dependencies and its dependencies builds are 
+
+##### Differential Loading
+
+Differential loading makes sure there is different types of loading for legacy browsers.
+
+Left at 16:51
+https://www.youtube.com/watch?v=OL3JppHRluE&t=900s
