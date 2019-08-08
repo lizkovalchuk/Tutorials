@@ -28,3 +28,8 @@ Differential loading makes sure there is different types of loading for legacy b
 
 Left at 16:51
 https://www.youtube.com/watch?v=OL3JppHRluE&t=900s
+
+
+##### Watching Files
+
+`$ tsc ./a.ts ./b.ts`
