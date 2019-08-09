@@ -14,6 +14,19 @@
 10. [ TypeScript ](#typescript)
 11. [ Compiling TypeScript ](#compiling-typescript)
 12. [ TypeScript Features ](#typescript-features)
+13. [ TypeScript Classes ](#typescript-classes)
+14. [ Interfaces ](#interfaces)
+15. [ Shapes ](#shapes)
+16. [ Union Types ](#union-types)
+17. [ Intersection Types ](#intersections-types)
+18. [ Function Type Definitions ](#function-type-definitions)
+19. [ Decorators ](#decorators)
+20. [ Property Decorators ](#property-decorators)
+21. [ Class Decorators ](#class-decorators)
+22. [ Parameter Decorators ](#parameter-decorators)
+23. [ Understanding the File Structure ](#understanding-the-file-structure)
+24. [ Bootstrapping Providers ](#bootstrapping-providers)
+25. [ Creating a Component ](#creating-a-component)
 
 <a data="introduction"></a>
 
@@ -57,13 +70,13 @@ class Hamburger {
 }
 ```
 
-Traditional class-based languages often reserve the word this to reference the current (runtime) instance of the class. In Javascript this refers to the calling context and therefore can change to be something other than the object
+Traditional class-based languages often reserve the word `this` to reference the current (runtime) instance of the class. In Javascript `this` refers to the calling context and therefore can change to be something other than the object.
 
 <a data="objects"></a>
 
 ### __Objects__
 
-An object is an instance of a class which is created using the `new` operator. When using a dot notation to access a method on the object, `this` will refer to the object to the left of the dot.
+An object is an instance of a class which is created using the `new` operator. When using dot notation to access a method on the object, `this` will refer to the object to the left of the dot.
 
 ```js
 let burger = new Hamburger();
@@ -71,8 +84,6 @@ burger.listToppings();
 ```
 
 In the snippet above, whenever `this` is used from inside class Hamburger, it will refer to object `burger`.
-
-4. [ This Keyword ](#this-keyword)
 
 <a data="this-keyword"></a>
 
@@ -258,7 +269,7 @@ sayName(john) // -> Helo John Smith Doe
 ### __Modules__
 
 
-All code and data inside the module has file scope, what this means is they are not accessible from code outside the module. To share code or data outside a module, it needs to be exported using the export keyword.
+All code and data inside the module has file scope, what this means is they are not accessible from code outside the module. To share code or data outside a module, it needs to be exported using the `export` keyword.
 
 ```js
 // File: circle.js
@@ -329,7 +340,7 @@ class Pizza {
 ### __Compiling TypeScript__
 
 
-You need to compile you `.ts` files, and the `tsconfig.json` files let programmers write down all the compiler settings they want. For Angular projects there are a number of specific settings that need to be configured in a project's `tsconfig.json`.
+You need to compile you `.ts` files, and the `tsconfig.json` file lets programmers write down all the compiler settings they want. For Angular projects there are a number of specific settings that need to be configured in a project's `tsconfig.json`.
 
 ```js
 {
@@ -349,21 +360,21 @@ You need to compile you `.ts` files, and the `tsconfig.json` files let programme
 }
 ```
 
-##### Target
+##### _Target_
 
 The compilation target. TypeScript supports targeting different platforms depending on your needs. In our case, we're targeting modern browsers which support ES5.
 
-##### Module
+##### _Module_
 
 The target module resolution interface. We're integrating TypeScript through webpack which supports different interfaces. We've decided to use node's module resolution interface, `commonjs`.
 
-##### Decorators
+##### _Decorators_
 
 Decorator support in TypeScript hasn't been finalized yet but since Angular uses decorators extensively, these need to be set to true. Decorators have not been introduced yet, and will be covered later in this section.
 
-##### TypeScript with Webpack
+##### _TypeScript with Webpack_
 
-We won't be running tsc manually, however. Instead, webpack's ts-loader will do the transpilation during the build:
+We won't be running `tsc` manually, however. Instead, webpack's ts-loader will do the transpilation during the build:
 
 ```js
   // webpack.config.js
@@ -379,7 +390,7 @@ We won't be running tsc manually, however. Instead, webpack's ts-loader will do 
 
 ### __TypeScript Features__
 
-##### Types
+##### _Types_
 
 JavaScript's types also exist in TypeScript:
 - `boolean` (true/false)
@@ -411,3 +422,453 @@ function showMessage(data: string): void {
 }
 showMessage('hello');
 ```
+
+TypeScript provides support for functions that take optional parameters like so:
+
+```ts
+function logMessage(message: string, isDebug?: boolean) {
+  if (isDebug) {
+    console.log('Debug: ' + message);
+  } else {
+    console.log(message);
+  }
+}
+logMessage('hi');         // 'hi'
+logMessage('test', true); // 'Debug: test'
+```
+
+Using a `?` lets tsc know that isDebug is an optional parameter. `tsc` will not complain if `isDebug` is omitted.
+
+
+<a data="typescript-classes"></a>
+
+### __TypeScript Classes__
+
+TypeScript also treats `class`es as their own type:
+
+```ts
+class Foo { foo: number; }
+class Bar { bar: string; }
+
+class Baz { 
+  constructor(foo: Foo, bar: Bar) { }
+}
+
+let baz = new Baz(new Foo(), new Bar()); // valid
+baz = new Baz(new Bar(), new Foo());     // tsc errors
+```
+
+Like function parameters, `class`es sometimes have optional members. The same ?: syntax can be used on a class definition:
+
+```ts
+class Person {
+  name: string;
+  nickName?: string;
+}
+```
+
+In the above example, an instance of `Person` is guaranteed to have a `name`, and might optionally have a `nickName`.
+
+
+<a data="interfaces"></a>
+
+### __Interfaces__
+
+An _interface_ is a TypeScript artifact, it is not part of ECMAScript. An interface is a way to define a contract on a function with respect to the arguments and their type. Along with functions, an interface can also be used with a Class as well to define custom types.
+
+An interface is an abstract type, it does not contain any code as a class does. It only defines the 'signature' or shape of an API. During transpilation, an interface will not generate any code, it is only used by Typescript for type checking during development.
+
+Here is an example of an interface describing a function API:
+
+```ts
+interface Callback {
+  (error: Error, data: any): void;
+}
+
+function callServer(callback: Callback) {
+  callback(null, 'hi');
+}
+
+callServer((error, data) => console.log(data));  // 'hi'
+callServer('hi');     
+```
+
+Sometimes JavaScript functions can accept multiple types as well as varying arguments, that is, they can have different call signatures. Interfaces can be used to specify this.
+
+```ts
+interface PrintOutput {
+  (message: string): void;    // common case
+  (message: string[]): void;  // less common case
+}
+
+let printOut: PrintOutput = (message) => {
+  if (Array.isArray(message)) {
+    console.log(message.join(', '));
+  } else {
+    console.log(message);
+  }
+}
+
+printOut('hello');       // 'hello'
+printOut(['hi', 'bye']); // 'hi, bye'
+```
+
+<a data="shapes"></a>
+
+### __Shapes__
+
+Shapes work like TypeScript's `interfaces`, and are in fact how TypeScript compares custom types like `classes` and `interfaces`.
+
+```ts
+interface Action {
+  type: string;
+}
+
+let a: Action = {
+    type: 'literal' 
+}
+
+class NotAnAction {
+  type: string;
+  constructor() {
+    this.type = 'Constructor function (class)';
+  }
+}
+
+a = new NotAnAction(); // valid TypeScript!
+```
+
+Despite the fact that `Action` and `NotAnAction` have different identifiers, `tsc` lets us assign an instance of `NotAnAction` to `a` which has a type of `Action`. This is because TypeScript only really cares that objects have the same shape. In other words if two objects have the same attributes, with the same typings, those two objects are considered to be of the same type.
+
+<a data="union-types"></a>
+
+### __Union Types__
+
+Union types allow type annotations to specify that a property should be one of a set of types (either/or).
+
+```ts
+function admitAge (age: number|string): string {
+  return `I am ${age}, alright?!`;
+}
+
+admitAge(30); // 'I am 30, alright?!'
+admitAge('Forty'); // 'I am Forty, alright?!'
+```
+
+The `type` keyword simplifies annotating and reusing union types.
+
+```ts
+type Age = number | string;
+
+function admitAge (age: Age): string {
+  return `I am ${age}, alright?!`;
+}
+
+let myAge: Age = 50;
+let yourAge: Age = 'One Hundred';
+admitAge(yourAge); // 'I am One Hundred, alright?!'
+```
+
+A union type of string literal types is a very useful pattern, creating what is basically an enum with string values.
+
+```ts
+type PartyZone = "pizza hut" | "waterpark" | "bowling alley" | "abandoned warehouse";
+
+function goToParty (place: PartyZone): string {
+  return `lets go to the ${place}`;
+}
+
+goToParty("pizza hut");
+goToParty("chuck e. cheese"); // Argument of type `"chuck e. cheese"' is not assignable to parameter of type 'PartyZone'
+```
+
+<a data="intersections-types"></a>
+
+### __Intersection Types__
+
+Intersection types are the combination of two or more types. Useful for objects and params that need to implement more than one interface.
+
+```ts
+interface Kicker {
+  kick(speed: number): number;
+}
+
+interface Puncher {
+  punch(power: number): number;
+}
+// assign intersection type definition to alias KickPuncher
+type KickPuncher = Kicker & Puncher;
+
+function attack (warrior: KickPuncher) {
+  warrior.kick(102);
+  warrior.punch(412);
+  warrior.judoChop(); // Property 'judoChop' does not exist on type 'KickPuncher'
+}
+```
+
+<a data="function-type-definitions"></a>
+
+### __Function Type Definitions__
+
+Function type annotations can get much more specific than typescripts built-in `Function` type. Function type definitions allow you to attach a function signature to it's own type.
+
+```ts
+type MaybeError = Error | null;
+type Callback = (err: MaybeError, response: Object) => void;
+
+function sendRequest (cb: Callback): void {
+  if (cb) {
+    cb(null, {});
+  }
+}
+```
+
+Here is the function type defined inline:
+
+```ts
+function sendRequest (cb: (err: Error|null, response: Object) => void): void {
+  if (cb) {
+    cb(null, {});
+  }
+}
+```
+
+<a data="decorators"></a>
+
+### __Decorators__
+
+Decorators are functions that are invoked with a prefixed `@` symbol, and immediately followed by a `class`, parameter, method or property. The decorator function is supplied information about the class, parameter or method, and the decorator function returns something in its place, or manipulates its target in some way. Typically the "something" a decorator returns is the same thing that was passed in, but it has been augmented in some way.
+
+Decorators are functions, and there are four things (class, parameter, method and property) that can be decorated; consequently there are four different function signatures for decorators:
+
+- class
+
+```ts
+declare type ClassDecorator = <TFunction extends Function>(target: TFunction) => TFunction | void;
+```
+
+- property
+
+```ts
+declare type PropertyDecorator = (target: Object, propertyKey: string | symbol) => void;
+```
+
+- method
+
+```ts
+declare type MethodDecorator = <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T> | void;
+```
+
+- parameter
+
+```ts
+declare type ParameterDecorator = (target: Object, propertyKey: string | symbol, parameterIndex: number) => void;
+```
+
+<a data="property-decorators"></a>
+
+### __Property Decorators__
+
+```ts
+function Override(label: string) {
+  return function (target: any, key: string) {
+    Object.defineProperty(target, key, { 
+      configurable: false,
+      get: () => label
+    });
+  }
+}
+
+class Test {
+  @Override('test')      // invokes Override, which returns the decorator
+  name: string = 'pat';
+}
+
+let t = new Test();
+console.log(t.name);  // 'test'
+```
+
+In this case the decorated property is replaced by the `label` passed to the decorator. It's important to note that property values cannot be directly manipulated by the decorator; instead an accessor is used.
+
+Here's a classic property example that uses a _plain decorator_:
+
+```ts
+function ReadOnly(target: any, key: string) {
+  Object.defineProperty(target, key, { writable: false });
+}
+
+class Test {
+  @ReadOnly             // notice there are no `()`
+  name: string;
+}
+
+const t = new Test();
+t.name = 'jan';         
+console.log(t.name); // 'undefined'
+```
+
+In this case the name property is not `writable`, and remains undefined.
+
+<a data="class-decorators"></a>
+
+### __Class Decorators__
+
+```ts
+function log(prefix?: string) {
+  return (target) => {
+    // save a reference to the original constructor
+    var original = target;
+
+    // a utility function to generate instances of a class
+    function construct(constructor, args) {
+      var c: any = function () {
+        return constructor.apply(this, args);
+      }
+      c.prototype = constructor.prototype;
+      return new c();
+    }
+
+    // the new constructor behavior
+    var f: any = function (...args) {
+      console.log(prefix + original.name);
+      return construct(original, args);
+    }
+
+    // copy prototype so instanceof operator still works
+    f.prototype = original.prototype;
+
+    // return new constructor (will override original)
+    return f;
+  };
+}
+
+@log('hello')
+class World {
+}
+
+const w = new World(); // outputs "helloWorld"
+```
+
+- In the example `log` is invoked using `@`, and passed a string as a parameter, `@log()` returns an anonymous function that is the actual decorator.
+- The decorator function takes a class, or constructor function (ES5) as an argument. The decorator function then returns a new class construction function that is used whenever `World` is instantiated.
+- This decorator does nothing other than log out its given parameter, and its `target`'s class name to the console.
+
+
+<a data="parameter-decorators"></a>
+
+### __Parameter Decorators__
+
+```ts
+function logPosition(target: any, propertyKey: string, parameterIndex: number) {
+  console.log(parameterIndex);
+}
+
+class Cow {
+  say(b: string, @logPosition c: boolean) {
+    console.log(b);
+  }
+}
+
+new Cow().say('hello', false); // outputs 1 (newline) hello
+```
+
+The above demonstrates decorating method parameters.
+
+<a data="understanding-the-file-structure"></a>
+
+### __Understanding the File Structure__
+
+- `app/app.component.ts` - this is where we define our root component 
+- `app/app.module.ts` - the entry Angular Module to be bootstrapped
+- `index.html` - this is the page the component will be rendered in
+- `app/main.ts` - is the glue that combines the component and page together
+
+_app/app.component.ts_
+
+```ts
+import { Component } from '@angular/core'
+
+@Component({
+    selector: 'app-root',
+    template: '<b>Bootstrapping an Angular Application</b>'
+})
+export class AppComponent { }
+```
+
+_index.html_
+
+```xml
+<body>
+    <app-root>Loading...</app-root>
+</body>
+```
+
+_app/app.module.ts_
+
+```ts
+import { BrowserModule }  from '@angular/platform-browser';
+import { NgModule } '@angular/core';
+import { AppComponent } from './app.component'
+
+@NgModule({
+  imports: [BrowserModule],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+```
+
+_app/main.ts_
+
+```ts
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+If you're making use of Ahead-of-Time (AoT) compilation, you would code `main.ts` as follows:
+
+```ts
+import { platformBrowser} from '@angular/platform-browser';
+import { AppModuleNgFactory } from '../aot/app/app.module.ngfactory';
+
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+```
+
+The bootstrap process loads `main.ts` which is the main entry point of the application. The `AppModule` operates as the root module of our application. The module is configured to use `AppComponent` as the component to bootstrap, and will be rendered on any `app-root` HTML element encountered.
+
+There is an `app` HTML element in the `index.html` file, and we use `app/main.ts` to import the `AppModule` component and the `platformBrowserDynamic().bootstrapModule` function and kickstart the process. As shown above, you may optionally use `AoT` in which case you will be working with Factories, in the example, `AppModuleNgFactory` and `bootstrapModuleFactory`.
+
+
+<a data="bootstrapping-providers"></a>
+
+### __Bootstrapping Providers__
+
+Here's an example of how to bootstrap your application with application-wide providers.
+
+For this, we will register a service called `GreeterService` with the `providers` property of the module we are using to bootstrap the application.
+
+_app/app.module.ts_
+
+```ts
+import { BrowserModule }  from '@angular/platform-browser';
+import { NgModule } '@angular/core';
+import { AppComponent } from './app.component'
+import { GreeterService } from './greeter.service';
+
+@NgModule({
+  imports: [BrowserModule],
+  providers: [GreeterService],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+<a data="creating-a-component"></a>
+
+### __Creating a Component__
+
+We define a component's application logic inside a `class`. To this we attach `@Component`, a TypeScript `decorator`, which allows you to modify a class or function definition and adds metadata to properties and function arguments.
