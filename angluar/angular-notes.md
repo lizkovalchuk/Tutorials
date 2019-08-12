@@ -35,6 +35,8 @@
 31. [ Grouping Dependencies Into Modules ](#grouping-dependencies-into-modules)
 32. [ Directives ](#directives)
 33. [ NgStyle Directives ](#ngstyle-directives)
+34. [ NgClass Directives ](#ngclass-directives)
+35. [ Structural Directives ](#structural-directives)
 
 <a data="introduction"></a>
 
@@ -884,7 +886,7 @@ We define a component's application logic inside a `class`. To this we attach `@
 - _selector_ is the element property that we use to tell Angular to create and insert an instance of this component.
 - _template_ is a form of HTML that tells Angular what needs to be to rendered in the DOM.
 
-The Component below will interpolate the value of `name` variable into the template between the double braces `{{name}}`, what get rendered in the view is `<p>Hello, World</p>`
+The Component below will interpolate the value of `name` variable into the template between the double braces `{{name}}`, what get rendered in the view is `<p>Hello, World!</p>`
 
 ```ts
 import { Component } from '@angular/core';
@@ -1291,3 +1293,157 @@ A Directive modifies the DOM to change apperance, behavior or layout of DOM elem
 
 ### __NgStyle Directives__
 
+Angular provides a built-in directive, `ngStyle`, to modify a component or element's style. Binding a directive works the exact same way as component attribute bindings. 
+
+```ts
+@Component({
+  selector: 'app-style-example',
+  template: `
+    <p style="padding: 1rem"
+      [ngStyle]="{
+        'color': 'red',
+        'font-weight': 'bold',
+        'borderBottom': borderStyle
+      }">
+      <ng-content></ng-content>
+    </p>
+  `
+})
+export class StyleExampleComponent {
+  borderStyle = '1px solid black';
+}
+```
+
+In the example above, we're binding an expression, an object literal, to the `ngStyle` directive so the directive name must be enclosed in square brackets. `ngStyle` accepts an object whose properties and values define that element's style.
+
+We can remove the style properties out of the template into the component as a property object, which then gets assigned to `NgStyle` using property binding. This allows dynamic changes to the values as well as provides the flexibility to add and remove style properties.
+
+```ts
+@Component({
+  selector: 'app-style-example',
+  template: `
+    <p style="padding: 1rem"
+      [ngStyle]="alertStyles">
+      <ng-content></ng-content>
+    </p>
+  `
+})
+export class StyleExampleComponent {
+  borderStyle = '1px solid black';
+
+  alertStyles = {
+    'color': 'red',
+    'font-weight': 'bold',
+    'borderBottom': this.borderStyle
+  };
+}
+```
+
+<a data="ngclass-directives"></a>
+
+### __NgClass Directives__
+
+The `ngClass` directive changes the `class` attribute that is bound to the component or element it's attached to.
+
+#### Binding a string
+
+We can bind a string directly to the attribute. This works just like adding an html `class` attribute.
+
+```ts
+@Component({
+  selector: 'app-class-as-string',
+  template: `
+    <p ngClass="centered-text underlined" class="orange">
+      <ng-content></ng-content>
+    </p>
+  `,
+  styles: [`
+    .centered-text {
+      text-align: center;
+    }
+
+    .underlined {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .orange {
+      color: orange;
+    }
+  `]
+})
+export class ClassAsStringComponent {
+}
+```
+
+#### Binding an array
+
+```ts
+@Component({
+  selector: 'app-class-as-array',
+  template: `
+    <p [ngClass]="['warning', 'big']">
+      <ng-content></ng-content>
+    </p>
+  `,
+  styles: [`
+    .warning {
+      color: red;
+      font-weight: bold;
+    }
+
+    .big {
+      font-size: 1.2rem;
+    }
+  `]
+})
+export class ClassAsArrayComponent {
+}
+```
+
+Passing in an array is useful when you want to have a function put together the list of applicable class names.
+
+
+#### Binding an object
+
+Angular applies each property name of that object to the component if that property is true.
+
+```ts
+@Component({
+  selector: 'app-class-as-object',
+  template: `
+    <p [ngClass]="{ card: true, dark: false, flat: flat }">
+      <ng-content></ng-content>
+      <br>
+      <button type="button" (click)="flat=!flat">Toggle Flat</button>
+    </p>
+  `,
+  styles: [`
+    .card {
+      border: 1px solid #eee;
+      padding: 1rem;
+      margin: 0.4rem;
+      font-family: sans-serif;
+      box-shadow: 2px 2px 2px #888888;
+    }
+
+    .dark {
+      background-color: #444;
+      border-color: #000;
+      color: #fff;
+    }
+
+    .flat {
+      box-shadow: none;
+    }
+  `]
+})
+export class ClassAsObjectComponent {
+  flat: boolean = true;
+}
+```
+
+<a data="structural-directives"></a>
+
+### __Structural Directives__
+
+Structural Directives are a way of handling how a component or element renders through the use of the `template` tag. Angular has a few built-in structural directives such as `ngIf`, `ngFor`, and `ngSwitch`.
