@@ -27,6 +27,13 @@
 23. [ Understanding the File Structure ](#understanding-the-file-structure)
 24. [ Bootstrapping Providers ](#bootstrapping-providers)
 25. [ Creating a Component ](#creating-a-component)
+26. [ Passing Data into a Component ](#passing-data-into-a-component)
+27. [ Responding to Component Events ](#responding-to-component-events)
+28. [ Using Two-Way Data Binding ](#using-two-way-data-binding)
+29. [ Accessing Child Components from Template ](#accessing-child-components-from-template)
+30. [ Projection ](#projection)
+31. [ Grouping Dependencies Into Modules ](#grouping-dependencies-into-modules)
+32. [ Directives ](#directives)
 
 <a data="introduction"></a>
 
@@ -458,7 +465,7 @@ let baz = new Baz(new Foo(), new Bar()); // valid
 baz = new Baz(new Bar(), new Foo());     // tsc errors
 ```
 
-Like function parameters, `class`es sometimes have optional members. The same ?: syntax can be used on a class definition:
+Like function parameters, `class`es sometimes have optional members. The same `?:` syntax can be used on a class definition:
 
 ```ts
 class Person {
@@ -610,7 +617,7 @@ function attack (warrior: KickPuncher) {
 
 ### __Function Type Definitions__
 
-Function type annotations can get much more specific than typescripts built-in `Function` type. Function type definitions allow you to attach a function signature to it's own type.
+Function type annotations can get much more specific than typescripts built-in `Function` type. Function type definitions allow you to attach a function signature to its own type.
 
 ```ts
 type MaybeError = Error | null;
@@ -871,4 +878,411 @@ export class AppModule { }
 
 ### __Creating a Component__
 
-We define a component's application logic inside a `class`. To this we attach `@Component`, a TypeScript `decorator`, which allows you to modify a class or function definition and adds metadata to properties and function arguments.
+We define a component's application logic inside a `class`. To this we attach `@Component`, a TypeScript `decorator`, which allows you to modify a class or function definition and adds metadata to properties and function arguments. 
+
+- _selector_ is the element property that we use to tell Angular to create and insert an instance of this component.
+- _template_ is a form of HTML that tells Angular what needs to be to rendered in the DOM.
+
+The Component below will interpolate the value of `name` variable into the template between the double braces `{{name}}`, what get rendered in the view is `<p>Hello, World</p>`
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'rio-hello',
+  template: '<p>Hello, {{name}}!</p>',
+})
+export class HelloComponent {
+  name: string;
+
+  constructor() {
+    this.name = 'World';
+  }
+}
+```
+
+To use this component we simply add `<rio-hello></rio-hello>` to the HTML file or another template, and Angular will insert an instance of the `HelloComponent` view between those tags.
+
+
+- _Smart / Container_ components are application-specific, higher-level, container components, with access to the application's domain model.
+- _Dumb / Presentational_ components are components responsible for UI rendering and/or behavior of specific entities passed in via components API (i.e component properties and events). Those components are more in-line with the upcoming Web Component standards.
+
+
+<a data="passing-data-into-a-component"></a>
+
+### __Passing Data into a Component__
+
+There are two ways to pass data into a component: 
+1. property binding
+2. event binding
+
+In Angular, data and event change detection happens top-down from parent to children. However it is also possible to create events that propogate upwards. 
+
+The `@Input()` decorator defines a set of parameters that can be passed down from the component's parent. 
+
+```ts
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'rio-hello',
+  template: '<p>Hello, {{name}}!</p>',
+})
+export class HelloComponent {
+  @Input() name: string;
+}
+```
+
+Inputs allow us to configure a particular instance of a component. We can now use our component like so:
+
+```xml
+<!-- To bind to a raw string -->
+<rio-hello name="World"></rio-hello>
+<!-- To bind to a variable in the parent scope -->
+<rio-hello [name]="helloName"></rio-hello>
+```
+
+<a data="responding-to-component-events"></a>
+
+### __Responding to Component Events__
+
+An event handler is specified inside the template using round brackets to denote event binding. This event handler is then coded in the class to process the event.
+
+```ts
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'rio-counter',
+  template: `
+    <div>
+      <p>Count: {{num}}</p>
+      <button (click)="increment()">Increment</button>
+    </div>
+  `
+})
+export class CounterComponent {
+  num = 0;
+
+  increment() {
+    this.num++;
+  }
+}
+```
+
+To send data out of components via outputs, start by defining the outputs attribute. It accepts a list of output parameters that a component exposes to its parent.
+
+_app/counter.component.ts_
+
+```ts
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'rio-counter',
+  templateUrl: 'app/counter.component.html'
+})
+export class CounterComponent {
+  @Input()  count = 0;
+  @Output() result = new EventEmitter<number>();
+
+  increment() {
+    this.count++;
+    this.result.emit(this.count);
+  }
+}
+```
+
+_app/counter.component.html_
+
+```ts
+<div>
+  <p>Count: {{ count }}</p>
+  <button (click)="increment()">Increment</button>
+</div>
+```
+
+_app/app.component.ts_
+
+```ts
+import { Component, OnChange } from '@angular/core';
+
+@Component({
+  selector: 'rio-app',
+  templateUrl: 'app/app.component.html'
+})
+export class AppComponent implements OnChange {
+  num = 0;
+  parentCount = 0;
+
+  ngOnChange(val: number) {
+    this.parentCount = val;
+  }
+}
+```
+
+_app/app.component.html_
+
+```ts
+<div>
+  Parent Num: {{ num }}<br>
+  Parent Count: {{ parentCount }}
+  <rio-counter [count]="num" (result)="ngOnChange($event)">
+  </rio-counter>
+</div>
+```
+
+Together a set of input + output bindings define the public API of your component. In our templates we use the [squareBrackets] to pass inputs and the (parenthesis) to handle outputs.
+
+<a data="using-two-way-data-binding"></a>
+
+### __Using Two-Way Data Binding__
+
+Two-way data binding combines the input and output binding into a single notation using the `ngModel` directive.
+
+```ts
+<input [(ngModel)]="name" >
+```
+
+What this is doing behind the scenes is equivalent to:
+
+```ts
+<input [ngModel]="name" (ngModelChange)="name=$event">
+```
+
+To create your own component that supports two-way binding, you must define an `@Output` property to match an `@Input`, but suffix it with the `Change`. The code example below, inside class `CounterComponent` shows how to make property count support two-way binding.
+
+_app/counter.component.ts_
+
+```ts
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'rio-counter',
+  templateUrl: 'app/counter.component.html'
+})
+export class CounterComponent {
+  @Input() count = 0;
+  @Output() countChange = EventEmitter<number>();
+
+  increment() {
+    this.count++;
+    this.countChange.emit(this.count);
+  }
+}
+```
+
+_app/counter.component.html_
+
+```ts
+<div>
+  <p>
+    <ng-content></ng-content>
+    Count: {{ count }} -
+    <button (click)="increment()">Increment</button>
+  </p>
+</div>
+```
+
+<a data="accessing-child-components-from-template"></a>
+
+### __Accessing Child Components from Template__
+
+In our templates, we may find ourselves needing to access values provided by the child components which we use to build our own component.
+
+_app/app.component.html_
+
+```ts
+<section >
+  <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" ngModel>
+    <button type="submit">Submit</button>
+  </form>
+  Form Value: {{formValue}}
+</section>
+```
+
+_app/app.component.ts_
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'rio-app',
+  templateUrl: 'app/app.component.html'
+})
+export class AppComponent {
+  formValue = JSON.stringify({});
+
+  onSubmit (form: NgForm) {
+    this.formValue = JSON.stringify(form.value);
+  }
+}
+```
+
+The example above shows how to reference the instance of a child component in your template. With that reference, you can then access public properties and methods on that component.
+
+_app/app.component.html_
+
+```ts
+<rio-profile #profile></rio-profile>
+My name is {{ profile.name }}
+```
+
+_app/profile.component.ts_
+
+```ts
+@Component({
+  selector: 'rio-profile',
+  templateUrl: 'app/profile.component.html'
+})
+export class ProfileComponent {
+  name = 'John Doe';
+}
+```
+
+<a data="projection"></a>
+
+### __Projection__
+
+Projection is a very important concept in Angular. It enables developers to build reusable components and make applications more scalable and flexible. To illustrate that, suppose we have a `ChildComponent` like:
+
+```ts
+@Component({
+    selector: 'rio-child',
+    template: `
+      <div>
+        <h4>Child Component</h4>
+        {{ childContent }}
+      </div>
+    `
+})
+export class ChildComponent {
+  childContent = "Default content";
+}
+```
+
+Components by default support projection, and you can use the `ngContent` directive to place the projected content in your template. So, change ChildComponent to use projection:
+
+_app/child/child.component.ts_
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'rio-child',
+  template: `
+    <div style="border: 1px solid blue; padding: 1rem;">
+      <h4>Child Component</h4>
+      <ng-content></ng-content>
+    </div>
+  `
+})
+export class ChildComponent {
+}
+```
+
+Then, when we use `ChildComponent` in the template:
+
+_app/app.component.html_
+
+```ts
+...
+  <rio-child>
+    <p>My <i>projected</i> content.</p>
+  </rio-child>
+...
+```
+
+This is telling Angular, that for any markup that appears between the opening and closing tag of `<rio-child>`, to place inside of `<ng-content></ng-content>`.
+
+But what if we have multiple `<ng-content></ng-content>` and want to specify the position of the projected content to certain ng-content? 
+
+_app/child-select.component.html_
+
+```ts
+<div style="...">
+  <h4>Child Component with Select</h4>
+  <div style="...">
+    <ng-content select="header"></ng-content>
+  </div>
+  <div style="...">
+    <ng-content select="section"></ng-content>
+  </div>
+  <div style="...">
+    <ng-content select=".class-select"></ng-content>
+  </div>
+  <div style="...">
+    <ng-content select="footer"></ng-content>
+  </div>
+</div>
+```
+
+Then in the template, we can use directives, say, `<header>` to specify the position of projected content to the `ng-content` with `select="header"`:
+
+_app/app.component.html_
+
+```ts
+...
+<rio-child-select>
+  <section>Section Content</section>
+  <div class="class-select">
+    div with .class-select
+  </div>
+  <footer>Footer Content</footer>
+  <header>Header Content</header>
+</rio-child-select>
+...
+```
+
+Besides using directives, developers can also select a `ng-content` through css class:
+
+```ts
+<ng-content select=".class-select"></ng-content>
+```
+
+_app/app.component.html_
+
+```ts
+<div class="class-select">
+  div with .class-select
+</div>
+```
+
+<a data="grouping-dependencies-into-modules"></a>
+
+### __Grouping Dependencies Into Modules__
+
+Components depend on other components, directives and pipes. For example, `TodoListComponent` relies on `TodoItemComponent`. To let a component know about these dependencies we group them into a module.
+
+```ts
+import {NgModule} from '@angular/core';
+
+import {TodoListComponent} from './components/todo-list.component';
+import {TodoItemComponent} from './components/todo-item.component';
+import {TodoInputComponent} from './components/todo-input.component';
+
+@NgModule({
+  imports: [ ... ],
+  declarations: [
+    TodoListComponent,
+    TodoItemComponent,
+    TodoInputComponent
+  ],
+  bootstrap: [ ... ]
+})
+export class ToDoAppModule {
+}
+```
+
+The property `declarations` expects an array of components, directives and pipes that are part of the module.
+
+<a data="directives"></a>
+
+### __Directives__
+
+A Directive modifies the DOM to change apperance, behavior or layout of DOM elements. Directives are one of the core building blocks Angular uses to build applications. There are three main types of directives in Angular:
+
+1. _Component_ - directive with a template.
+2. _Attribute directives_ - directives that change the behavior of a component or element but don't affect the template
+    - Attribute directives are a way of changing the appearance or behavior of a component or a native DOM element. Ideally, a directive should work in a way that is component agnostic and not bound to implementation details. For example, Angular has built-in attribute directives such as `ngClass` and `ngStyle` that work on any component or element.
+3. _Structural directives_ - directives that change the behavior of a component or element by affecting how the template is rendered
+
