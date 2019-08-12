@@ -34,6 +34,7 @@
 30. [ Projection ](#projection)
 31. [ Grouping Dependencies Into Modules ](#grouping-dependencies-into-modules)
 32. [ Directives ](#directives)
+33. [ NgStyle Directives ](#ngstyle-directives)
 
 <a data="introduction"></a>
 
@@ -1285,4 +1286,8 @@ A Directive modifies the DOM to change apperance, behavior or layout of DOM elem
 2. _Attribute directives_ - directives that change the behavior of a component or element but don't affect the template
     - Attribute directives are a way of changing the appearance or behavior of a component or a native DOM element. Ideally, a directive should work in a way that is component agnostic and not bound to implementation details. For example, Angular has built-in attribute directives such as `ngClass` and `ngStyle` that work on any component or element.
 3. _Structural directives_ - directives that change the behavior of a component or element by affecting how the template is rendered
+
+<a data="ngstyle-directives"></a>
+
+### __NgStyle Directives__
 
