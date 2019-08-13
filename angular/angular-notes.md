@@ -1446,4 +1446,14 @@ export class ClassAsObjectComponent {
 
 ### __Structural Directives__
 
-Structural Directives are a way of handling how a component or element renders through the use of the `template` tag. Angular has a few built-in structural directives such as `ngIf`, `ngFor`, and `ngSwitch`.
+Structural Directives are a way of handling how a component or element renders through the use of the `template` tag. The `template` tag, it is an HTML element with a few special properties. Content nested in a template tag is not rendered on page load and is something that is meant to be loaded through code at runtime.  Angular has a few built-in structural directives such as `ngIf`, `ngFor`, and `ngSwitch`. Structural directives are easy to recognize. An asterisk (*) precedes the directive attribute name as in this example.
+
+Here is a link to an excellent example from the official Angular documentation:
+
+https://stackblitz.com/angular/mooeljgdpyyq
+
+
+
+
+https://angular.io/guide/structural-directives
+

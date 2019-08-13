@@ -3,6 +3,7 @@
 ## https://www.youtube.com/watch?v=OL3JppHRluE
 
 1. [ Introduction ](#introduction)
+2. [ Project Set-up ](#project-set-up)
 
 <a data="introduction"></a>
 
@@ -28,6 +29,15 @@ Differential loading makes sure there is different types of loading for legacy b
 
 Left at 16:51
 https://www.youtube.com/watch?v=OL3JppHRluE&t=900s
+
+
+
+<a data="project-set-up"></a>
+
+### Project Set-up
+
+
+
 
 
 
