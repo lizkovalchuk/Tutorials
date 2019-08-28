@@ -4,6 +4,7 @@
 
 
 1. [ Introduction ](#introduction)
+2. [ How-to ](#how-to)
 
 <a data="introduction"></a>
 
@@ -15,6 +16,10 @@ Clean Code Practices:
 2. Always ensure you have proper naming
 3. Functions and methods should have a single responsibilty
 
-ended at 15:11
+<a data="how-to"></a>
+
+### **How-to**
+
+1. Run the command `ng test` To run the test. 
 
 
