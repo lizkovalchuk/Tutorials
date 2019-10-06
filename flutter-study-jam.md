@@ -7,6 +7,7 @@
 2. [ Second Session Sept 23 ](#second-session-sept-23)
 
 <a data="first-session-sept-16"></a>
+
 ### **_First Session Sept 16_**
 
 - Everything is an object in Flutter. Margin and padding are objects as well and they have properties. Dart has strict rules for naming variable. All `vars` are considered `const`. 
@@ -25,4 +26,27 @@ provider pattern
 
 
 <a data="second-session-sept-23"></a>
+
 ### **_Second Session Sept 23__**
+
+- Rows and columns are a key feature for Flutter layout.
+- Flutter relies on the buton widget to handle interactivity
+  - FlatButton (great for forms)
+  - RaisedButton
+  - FloatActionButton
+  - Jester Detector (wraps around anything to make it clickable, which is like the `<a></a>`)
+  - Inkell (like Jester detector, but adds ripple effect from Material Design)
+- use `createState() => _nameOfComponentState()`
+- private classes, method, and variables are prepended with an underscore (a private modifier). It makes it unavaible to classes outside of that file.
+- Prebuilt layouts
+  - Card
+  - Chip 
+  - Circular Progress
+  - Grid View
+- rows and columns are a key concept in flutter
+- `center` has its own class. Checkout out `position-classes`
+- `hero` widget is for sweet animation
+- thecocktaildb.com
+
+
+cocktails.modal
