@@ -1,10 +1,11 @@
 # Flutter
 
-## Udemy Angular Tutorial Notes Section 2: Flutter Basics
+## Udemy Angular Tutorial Notes Section 2: Flutter Basics and Dart Fundamentals
 
 1. [ Flutter Intro ](#flutter-intro)
 2. [ Dart Basics ](#dart-basics)
 3. [ Dart Conventions ](#dart-conventions)
+4. [ Argument Types ](#argument-types)
 
 <a data="flutter-intro"></a>
 ### **_Flutter Intro_**
@@ -158,3 +159,28 @@ void main() {
 - If you inititate a `var`, it is good practice indicate which data type it is. When you initiate a `var` with a data type, you don't need to have both `var` and your data type.
 
 - However when initializing properties, it is better to let dart do type inference.
+ 
+<a data="argument-types"></a>
+
+### **_Argument Types_**
+
+#### Postional Arguments
+
+Positional Arguments can be accessed by the position in which they are declared. 
+
+```dart
+double addNumbers(double num1, double num2){
+  return num1 + num2;
+}
+
+// The argument in the first position is 1.87
+// The argument in the second position is 2.98
+
+void main() {
+  print(addNumbers(1.87, 2.98));
+}
+```
+
+#### Names Arguments
+
+Named arguments are targetted by their names, just like key value paring in objects. Many flutter widgets that need to be extended require named arguments.
