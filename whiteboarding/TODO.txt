@@ -1,0 +1,20 @@
+Write a program to :
+
+1. check whether a character is a vowel or consonant
+2. reverse a given number
+3. convert a number from decimal to binary
+4. find duplicate characters from a string
+5. reverse a given string
+6. check if two strings are a rotation of each other
+7. remove duplicates from an array
+8. find the missing number in a given integer array of 1 to 100
+9. find the 2nd largest number in an unsorted interger array
+10. print the next 20 leap years
+11. find the prime numbers between 100 and 1000
+12. convert any number to equivalent word
+13. return an array containing the digits of a given number
+14. sort a given array of integers
+15. reverse a given array
+16. remove duplicate nodes in an unsorted linked list
+17. find the length of a singly linked list
+18. reverse a singly linked list without recoursion

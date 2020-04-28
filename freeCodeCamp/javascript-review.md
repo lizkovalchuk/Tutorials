@@ -8,19 +8,19 @@
 5. [ Arrays ](#arrays) 
 6. [ Manipulating Arrays ](#manipulating-arrays) 
 7. [ Global Scope and Functions ](#scope-functions) 
-8. [ Switch Statement ](#switch) 
-9. [ Returning Boolean Values from Functions ](#booleans-functions)
+8. [ Switch Statement ](#switch-statement) 
+9. [ Returning Boolean Values from Functions ](#returning-boolean-values-from-functions)
 10. [ Objects ](#objects) 
-11. [ Using Objects for Lookups ](#lookups-objects) 
-12. [ Testing Objects for Properties ](#testing-obj-props) 
+11. [ Using Objects for Lookups ](#using-objects-for-lookups) 
+12. [ Testing Objects for Properties ](#testing-objects-for-properties) 
 13. [ Manipulating Complex Objects ](#manipulating-complex-objects)
-14. [ Accessing Nested Objects ](#nested-objects) 
-15. [ Accessing Nested Arrays ](#nested-arrays) 
+14. [ Accessing Nested Objects ](#accessing-nested-objects) 
+15. [ Accessing Nested Arrays ](#accessing-nested-arrays) 
 16. [ Loops ](#loops) 
-17. [ Do...While Loops ](#do-while-loops) 
+17. [ Do While Loops ](#do-while-loops) 
 18. [ Math Function ](#math-function) 
 19. [ ParseInt ](#parseInt) 
-20. [ Conditional Ternary Operator ](#ternary)
+20. [ Conditional Ternary Operator ](#conditional-ternary-operator)
 
 
 
@@ -185,7 +185,7 @@ typeof 3 // returns 'number'
 typeof '3' // returns 'string'
 ```
 
-<a data="switch"></a>
+<a data="switch-statement"></a>
 ### ___Switch Statement___
 
 In a ```switch``` statement you may not be able to specify all possible values as ```case``` statements. Instead, you can add the ```default``` statement which will be executed if no matching ```case``` statements are found. 
@@ -203,7 +203,7 @@ case 4:
 }
 ```
 
-<a data="booleans-functions"></a>
+<a data="returning-boolean-values-from-functions"></a>
 ### ___Returning Boolean Values from Functions___
 
 Sometimes people use an if/else statement to do a comparison, like this:
@@ -441,7 +441,7 @@ We can also delete properties from objects like this:
 delete ourDog.bark;
 ```
 
-<a data="lookups-objects"></a>
+<a data="using-objects-for-lookups"></a>
 ###  ___Using Objects for Lookups___
 
 Objects can be thought of as a key/value storage, like a dictionary. If you have tabular data, you can use an object to "lookup" values rather than a ```switch``` statement or an ```if/else``` chain. This is most useful when you know that your input data is limited to a certain range.
@@ -528,7 +528,7 @@ function phoneticLookup(val) {
 phoneticLookup("charlie");
 ```
 
-<a data="testing-obj-props"></a>
+<a data="testing-objects-for-properties"></a>
 ### ___Testing Objects for Properties___
 
 Sometimes it is useful to check if the property of a given object exists or not. We can use the ```.hasOwnProperty(propname)``` method of objects to determine if that object has the given property name. ```.hasOwnProperty()``` returns true or false if the property is found or not. Example:
@@ -622,7 +622,7 @@ var myMusic = [
   }
 ];
 ```
-<a data="nested-objects"></a>
+<a data="accessing-nested-objects"></a>
 ### ___Accessing Nested Objects___
 
 The sub-properties of objects can be accessed by chaining together the dot or bracket notation. Here is a nested object:
@@ -642,7 +642,7 @@ var ourStorage = {
 ourStorage.cabinet["top drawer"].folder2; // "secrets"
 ourStorage.desk.drawer; // "stapler"
 ```
-<a data="nested-arrays"></a>
+<a data="accessing-nested-arrays"></a>
 ### ___Accessing Nested Arrays___
 
 As we have seen in earlier examples, objects can contain both nested objects and nested arrays. Similar to accessing nested objects, Array bracket notation can be chained to access nested arrays. Here is an example of how to access a nested array:
@@ -808,7 +808,7 @@ multiplyAll([[1,2],[3,4],[5,6,7]]);
 ```
 
 <a data="do-while-loops"></a>
-### ___Do...While Loops___
+### ___Do While Loops___
 
 A "```do...while```" loop will first "```do```" one pass of the code inside the loop no matter what, and then it runs "```while```" a specified condition is true and stops once that condition is no longer true.
 
@@ -935,7 +935,7 @@ var a = parseInt("11", 2);
 
 The radix variable says that "11" is in the binary system, or base 2. This example converts the string "11" to an integer 3.
 
-<a data="ternary"></a>
+<a data="conditional-ternary-operator"></a>
 ### ___Conditional Ternary Operator___
 
 The syntax is:
