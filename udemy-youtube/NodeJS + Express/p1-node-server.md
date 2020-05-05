@@ -1,4 +1,4 @@
-# Angular & NodeJS - The MEAN Stack Guide [2020 Edition]
+# NodeJS Crash Course - Brad Traversy
 
 ## Adding NodeJS:  - Section 3
 
@@ -12,16 +12,31 @@
 
 ##### NodeJS
 
-Node is javascript runtime that runs on the server. This means you can execute javascript code with some extra features, that is executed on the server. You can also create the server that listens to requests and sends back responses. Furthermore you can handle your server side logic.
+- Node is javascript runtime that runs on the server. 
+    - This means you can execute javascript code with some extra features, that is executed on the server. 
+- You can also create a server that listens to requests and sends back responses. Furthermore you can handle your server side logic.
+- Unlike PHP, which needs a seperate server software like Apache or NGinx, you create the server with NodeJS. 
+- NodeJS is non-block (asynchronus):
+  - It works on a single thread using non-blocking I/O calls (input ouput calls). 
+    - NodeJs is asynchronous and non-blocking on a single thread and this single thread can support tens of thousands of connections which is held in a single loop, which is called an event loop.
+    - For example, PHP is usually synchonous, runs on multiple threads. So everytime a request is made, it spawns a new thread and threads take up system memory. Synchronous programs sit and wait for one process to complete before starting the next.
+    - Running a single loop optimizes throughput and scalability in applications with many i/o operations.
+    - Where you don't want to use node is with CPU intensive apps (so long running calculations).
 
-Unlike PHP, which needs a seperate server software like Apache or NGinx, you create the server with NodeJS. 
 
-##### Express
+###### Diagram of Event Loop:
 
-Express is a framework building up on node to create a RESTful API. It is used to make Node development easier. Using Express and NodeJS allows us to create our own server to handle: 
-- core business logic
-- code that would be too performance intensive to run on the client side
-- code that is too security vulnerable to run on the client side
+![Post 3000](./images/event-loop-diagram.png)
+
+- When an event is triggered, a callback fires.
+- Supports concurrency via events and callbacks.
+
+##### Best Types of Projects For Node
+
+- REST APIs and Microservices.
+  - Espicially great for backends that don't return HTML pages, just JSONs.
+- Real Time Services (Chats and Live Updates)
+- CRUD Apps - Blogs, Shopping Carts and Social Networks.
 
 
 <a data="restful-api"></a>
@@ -39,8 +54,20 @@ A RESTful API is a stateless backend. It doesn't care which client connects to i
 
 ### **_Creating the Server_**
 
-1. Create a Javascript file to start building your NodeJS server. Let's name our file `server.js`.
-2. Import the `http` package by NodeJS.
+1. Make sure you have node installed.
+2. Run "npm init" to create a package.json file for your node project.
+    - The package.json file lists all dependencies needed to run the project as well as dev depencies.
+    - A good NodeJS dev dependency is `nodemon` so we don't need to keep restarting the server when we make a change.
+    - Use `-D` which is shortform for `--save-dev`
+
+```
+npm install -D nodemon
+```
+
+
+
+3. Create a Javascript file to start building your NodeJS server. Let's name our file `server.js`.
+4. Import the `http` package by NodeJS.
     - NodeJS imports by storing the import in a const unlike other js frameworks that import with:
 
 ```
@@ -97,4 +124,4 @@ server.listen(process.env.PORT || 3000);
 
 10. Lastly, go to port `3000` to see your first response:
 
-![Post 3000](./images/s3p1.png)
+![Post 3000](./images/first-response.png)
