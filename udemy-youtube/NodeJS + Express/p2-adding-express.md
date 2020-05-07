@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 - The response object represents the HTTP response which can:
   - Return JSON data
   - Return a template
-  - Redirection
+  - Perform a redirection
 
 ##### Middleware
 
@@ -73,3 +73,4 @@ app.get('/', (req, res) => {
 - It can make changes to the request and response objects. 
 - It can also end the respnose cycle.
 - Middleware functions always require a next function that calls the next stack.
+
