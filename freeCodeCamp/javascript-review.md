@@ -16,16 +16,19 @@
 13. [ Manipulating Complex Objects ](#manipulating-complex-objects)
 14. [ Accessing Nested Objects ](#accessing-nested-objects) 
 15. [ Accessing Nested Arrays ](#accessing-nested-arrays) 
-16. [ Loops ](#loops) 
+16. [ Replace Loops Using Recursion ](#replace-loops-using-recursion) 
 17. [ Do While Loops ](#do-while-loops) 
-18. [ Math Function ](#math-function) 
-19. [ ParseInt ](#parseInt) 
-20. [ Conditional Ternary Operator ](#conditional-ternary-operator)
+18. [ Loops ](#loops) 
+19. [ Math Function ](#math-function) 
+20. [ ParseInt ](#parseInt) 
+21. [ Conditional Ternary Operator ](#conditional-ternary-operator)
 
 
 
 <a name="variables-and-data-types"></a>
+
 ### ___Variables and Data Types___ 
+
 JavaScript provides seven different data types which are undefined, null, boolean, string, symbol, number, and object. Variable names can be made up of numbers, letters, and $ or _, but may not contain spaces or start with a number.
 
 Decimal numbers are sometimes referred to as floating point numbers or floats.
@@ -46,6 +49,7 @@ for(i=0; i < 16; i++){
 ```
 
 <a name="esc-chars"></a>
+
 ### ___Escape Characters___
 The following is a list of required escaping:
 
@@ -66,6 +70,7 @@ The following is a list of required escaping:
 You can find the length of a String value by writing ```.length``` after the string variable or string literal.
 
 <a name="bracket-notation"></a>	
+
 ### ___Bracket Notation___
 
 Bracket notation is a way to get a character at a specific index within a string. For example, the character at index 0 in the word "Charles" is "C". So if ```var firstName = "Charles"```, you can get the value of the first letter of the string by using ```firstName[0]```.
@@ -77,6 +82,7 @@ For example, if ```var firstName = "Charles"```, you can get the value of the la
 You can use the same principle we just used to retrieve the last character in a string to retrieve the Nth-to-last character. For example, you can get the value of the third-to-last letter of the ```var firstName = "Charles"``` string by using ```firstName[firstName.length - 3]```.
 
 <a name="arrays"></a>	
+
 ### ___Arrays___
 
 You can nest arrays within other arrays, like this: ```[["Bulls", 23], ["White Sox", 45]]```. This is also called a Multi-dimensional Array (array of arrays).
@@ -101,6 +107,7 @@ arr[3][0][1]; // equals 11
 ```
 
 <a name="manipulating-arrays"></a>	
+
 ### ___Manipulating Arrays___
 
 ```.push()``` takes one or more parameters and "pushes" them onto the end of the array.
@@ -119,6 +126,7 @@ console.log(threeArr); // Returns [1, 4]
 ```.unshift()``` works exactly like ```.push()```, but instead of adding the element at the end of the array, ```unshift()``` adds the element at the beginning of the array.
 
 <a name="scope-functions"></a>
+
 ### ___Global Scope and Functions___
 
 #### Scope
@@ -186,6 +194,7 @@ typeof '3' // returns 'string'
 ```
 
 <a data="switch-statement"></a>
+
 ### ___Switch Statement___
 
 In a ```switch``` statement you may not be able to specify all possible values as ```case``` statements. Instead, you can add the ```default``` statement which will be executed if no matching ```case``` statements are found. 
@@ -204,6 +213,7 @@ case 4:
 ```
 
 <a data="returning-boolean-values-from-functions"></a>
+
 ### ___Returning Boolean Values from Functions___
 
 Sometimes people use an if/else statement to do a comparison, like this:
@@ -315,6 +325,7 @@ function cc(card) {
 cc(2); cc(3); cc(7); cc('K'); cc('A');
 ```
 <a data="objects"></a>
+
 ### ___Objects___
 
 Objects are similar to ```arrays```, except that instead of using indexes to access and modify their data, you access the data in objects through what are called ```properties```. Properties don't always need to be strings, you can also use numbers as properties. You can even omit the quotes for single-word string properties, as follows:
@@ -442,6 +453,7 @@ delete ourDog.bark;
 ```
 
 <a data="using-objects-for-lookups"></a>
+
 ###  ___Using Objects for Lookups___
 
 Objects can be thought of as a key/value storage, like a dictionary. If you have tabular data, you can use an object to "lookup" values rather than a ```switch``` statement or an ```if/else``` chain. This is most useful when you know that your input data is limited to a certain range.
@@ -542,6 +554,7 @@ myObj.hasOwnProperty("middle"); // false
 ```
 
 <a data="manipulating-complex-objects"></a>
+
 ### ___Manipulating Complex Objects___
 
 A JavaScript object is one way to handle flexible data. They allow for arbitrary combinations of strings, numbers, booleans, arrays, functions, and objects. Here's an example of a complex data structure:
@@ -623,6 +636,7 @@ var myMusic = [
 ];
 ```
 <a data="accessing-nested-objects"></a>
+
 ### ___Accessing Nested Objects___
 
 The sub-properties of objects can be accessed by chaining together the dot or bracket notation. Here is a nested object:
@@ -643,6 +657,7 @@ ourStorage.cabinet["top drawer"].folder2; // "secrets"
 ourStorage.desk.drawer; // "stapler"
 ```
 <a data="accessing-nested-arrays"></a>
+
 ### ___Accessing Nested Arrays___
 
 As we have seen in earlier examples, objects can contain both nested objects and nested arrays. Similar to accessing nested objects, Array bracket notation can be chained to access nested arrays. Here is an example of how to access a nested array:
@@ -744,6 +759,7 @@ function updateRecords(id, prop, value) {
 }
 ```
 <a data="loops"></a>
+
 ### ___Loops___
 
 The most popular loops are the ```while``` and ```for``` loops. For loops don't have to iterate one at a time. By changing our ```final-expression```, we can count by even numbers.
@@ -808,6 +824,7 @@ multiplyAll([[1,2],[3,4],[5,6,7]]);
 ```
 
 <a data="do-while-loops"></a>
+
 ### ___Do While Loops___
 
 A "```do...while```" loop will first "```do```" one pass of the code inside the loop no matter what, and then it runs "```while```" a specified condition is true and stops once that condition is no longer true.
@@ -882,8 +899,54 @@ function lookUpProfile(name, prop){
       }
   }
 return "No such contact";
+
 ```
+
+<a data="replace-loops-using-recursion"></a>
+
+### ___Replace Loops Using Recursion___
+
+Recursion is the concept that a function can be expressed in terms of itself. For example, here is a function that multiplies the first `n` elements of an array to create the product of those elements.
+
+```javascript
+function multiply(arr, n) {
+  var product = 1;
+  for (var i = 0; i < n; i++) {
+      product *= arr[i];
+  }
+  return product;
+}
+```
+
+However, notice that `multiply(arr, n) == multiply(arr, n - 1) * arr[n - 1]`. That means you can rewrite multiply in terms of itself and never need to use a loop.
+
+```js
+function multiply(arr, n) {
+  if (n <= 0) {
+    return 1;
+  } else {
+    return multiply(arr, n - 1) * arr[n - 1];
+  }
+}
+```
+
+Here is another example: Write a recursive function, `sum(arr, n)`, that returns the sum of the first `n` elements of an array `arr`.
+
+```js
+function sum(arr, n) {
+  if(n <= 0) {
+    return 0;
+  } else {
+    return sum(arr, n - 1) + arr[n - 1];
+  }
+}
+```
+
+
+
+
 <a data="math-function"></a>
+
 ### ___Math Function___
 
 JavaScript has a ```Math.random()``` function that generates a random decimal number between 0 (inclusive) and not quite up to 1 (exclusive). Thus ```Math.random()``` can return a 0 but never quite return a 1.
