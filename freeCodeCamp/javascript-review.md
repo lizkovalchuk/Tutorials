@@ -942,8 +942,34 @@ function sum(arr, n) {
 }
 ```
 
+Here is another example: Write a function that uses recursion to return an array containing the integers `n` through `1` based on the `n` parameter. For example, calling this function with `n = 5` should return the array `[5, 4, 3, 2, 1]`.
+
+```js
+function countdown(n){
+  if(n < 1) {
+    return [];
+  } else {
+    const countArray = countdown(n - 1);
+    countArray.unshift(n);
+    return countArray;
+  }
+}
+```
+
+And here is one more example. Write a function that returns an array of integers which begins with a number represented by a `startNum` parameter and ends with a number represented by a `endNum` parameter. 
 
 
+```js
+function rangeOfNumbers(startNum, endNum) {
+  if (endNum - startNum === 0) {
+    return [startNum];
+  } else {
+    var numbers = rangeOfNumbers(startNum, endNum - 1);
+    numbers.push(endNum);
+    return numbers;
+  }
+}
+```
 
 <a data="math-function"></a>
 
