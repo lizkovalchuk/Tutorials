@@ -24,7 +24,6 @@
 21. [ Conditional Ternary Operator ](#conditional-ternary-operator)
 
 
-
 <a name="variables-and-data-types"></a>
 
 ### ___Variables and Data Types___ 
