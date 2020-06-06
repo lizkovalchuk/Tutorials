@@ -25,23 +25,21 @@ Log in to your Firebase console to adjust the services that you would like Fireb
 
 1. Go to your firebase console, click on the Authentication tab and click on the "Set up sign-in method".
 
- 
-
 2. For this tutorial, we will focus on the "Email/Password" way of authentication users. Click "Email/Passwork" and enable this type of authentication with the enable toggle in the modal.
 
-![Enabling email and password authentication](./images/firebase-2.png)
+![Enabling email and password authentication](./images/firebase-auth/firebase-2.png)
 
 3. Once you have enabled users, the users Tab in Authentication will update. You can add a user from this area if needed.
 
-![Users in the Firebase console](./images/firebase-3.png)
+![Users in the Firebase console](./images/firebase-auth/firebase-3.png)
 
 4. Next you need to get a special authentication object for your app. Start by adding your web app to your firebase project.
 
-![Add web app to project](./images/firebase-4.png)
+![Add web app to project](./images/firebase-auth/firebase-4.png)
 
 5. Once you add your project to your web app, you will be provided with a firebase object that contains all the necessary credentials. 
 
-![Paste firebase object into project](./images/firebase-5.png)
+![Paste firebase object into project](./images/firebase-auth/firebase-5.png)
 
 
 <a name="adding-firebase-to-your-react-app"></a>
@@ -52,7 +50,7 @@ Log in to your Firebase console to adjust the services that you would like Fireb
 - Create a folder named `config` inside `src` that is on the same level as `components` and `assets`.
 - Inside `config`, create a file and name it `fire.js`
 
-![Adding firebase object to project](./images/firebase-6.png)
+![Adding firebase object to project](./images/firebase-auth/firebase-6.png)
 
 
 <a name="adding-auth-to-see-profile-page"></a>

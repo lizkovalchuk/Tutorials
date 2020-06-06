@@ -1,4 +1,4 @@
-# Random Lessons
+# Git Lessons
 
 1. [ Mirror Repos to GitHub ](#mirror-repos-to-github)
 2. [ Adding Git Alias ](#adding-git-alias)
@@ -26,7 +26,6 @@ $ git config --global alias.st status
 ```
 
 - The characters after `alias` is what your alias will be. So in the first example, `co` is for checkout.
-- When you run your alias, the `git` keyword is implied.
 - If you want to add an alias that is comprised on multiple words, you just need to add the full command in quotations.
 
 ```
