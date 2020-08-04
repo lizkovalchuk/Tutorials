@@ -2,6 +2,7 @@
 
 1. [ Mirror Repos to GitHub ](#mirror-repos-to-github)
 2. [ Adding Git Alias ](#adding-git-alias)
+3. [ Adding Git Alias with a Parameter ](#adding-git-alias-with-a-parameter)
 
 <a name="mirror-repos-to-github"></a>
 
@@ -37,3 +38,9 @@ $ git config --global alias.unstage 'reset HEAD --'
 ```
 vim ~/.gitconfig
 ```
+
+<a name="adding-git-alias-with-a-parameter"></a>
+
+### **_Adding Git Alias with a Parameter_**
+
+1. Another commit
