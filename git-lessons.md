@@ -43,4 +43,15 @@ vim ~/.gitconfig
 
 ### **_Adding Git Alias with a Parameter_**
 
-1. Another commit
+1. The full command of an alias that takes a parameter needs to be in quotations.
+2. Writing an executable script requires creating a shell function, which is defined and called within the quotations.
+3. The `$` indicates the parameter.
+4. Define a default value for the parameter (not necessary)
+5. The following example prints `git commit -m "a commit message"` when you enter `git ci 'a commit message`
+
+```
+[alias]
+    ...
+    ci = "!f() { git commit -m \"${1-undefined commit message}\"; }; f"
+    ...
+```
