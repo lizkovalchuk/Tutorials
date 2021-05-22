@@ -12,7 +12,7 @@ The sound of the Hamza is a glottal stop and is transliterated as an apostrothy.
 
 
 
-# Vowels
+# Vowels Intro
 
 There are two types of vowels in Arabic: long and short. Short vowels are not represented by letters, but by small symbols above and below the letters. A text in which all the short vowels are indicated by these symbols is called "fully vowelled text". Apart from the Qur'aan and children's books, fully vowelled texts are rare.
 
