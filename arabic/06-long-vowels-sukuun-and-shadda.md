@@ -17,3 +17,14 @@ Sometimes a consonance doesn't carry a vowel. The symbol for this is written abo
 
 - كْتاب
 
+# Shadda
+
+Sometimes a consonant is doubled in length. The symbol for this is like a little "w" above a letter. In transliteration, this is indicated by writing the letter twice. Unlike other symbols, the shedda is usually printed to ensure the meaning of the word is clear. For example, similarly written words can have quite different meaning with a shedda.
+
+
+| Word  | Meaning | 
+|-------|----------|
+| درِّسة  | a female teacher |
+| درسة | a school        |
+
+> If a consonance carries both a shadda and a kasra, the kasra is not written under the consonance, but under the shadda.
